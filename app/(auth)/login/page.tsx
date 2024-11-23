@@ -26,7 +26,7 @@ export default function Login() {
           <SubmitButton text="로그인" />
         </form>
         <div className="px-8 pb-8 flex justify-center">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-neutral-500 dark:text-neutral-300">
             아직 나도하루 계정이 없나요?{" "}
             <Link href="/sign-up" className="underline text-violet-600">
               회원가입 하기
