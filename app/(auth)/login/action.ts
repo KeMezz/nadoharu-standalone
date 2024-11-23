@@ -38,7 +38,6 @@ export async function login(_: any, formData: FormData) {
     password: formData.get("password"),
   };
   const result = await formSchema.spa(data);
-
   if (!result.success) {
     return result.error.flatten();
   }
@@ -52,7 +51,6 @@ export async function login(_: any, formData: FormData) {
       password: true,
     },
   });
-
   const ok = await bcrypt.compare(result.data.password, user!.password ?? "");
   if (ok) {
     const session = await getSession();

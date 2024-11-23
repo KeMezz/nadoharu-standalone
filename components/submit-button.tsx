@@ -1,3 +1,5 @@
+"use client";
+
 import { cls } from "@/libs/cls";
 import { NextPage } from "next";
 import { useFormStatus } from "react-dom";
