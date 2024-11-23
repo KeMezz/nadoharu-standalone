@@ -1,13 +1,15 @@
+"use client";
+
 import ExternalLoginButton from "@/components/external-login-button";
 import SubmitButton from "@/components/submit-button";
 import Link from "next/link";
 import TextInput from "@/components/text-input";
-
-export const metadata = {
-  title: "로그인",
-};
+import { login } from "./action";
+import { useActionState } from "react";
+import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
 
 export default function Login() {
+  const [state, action] = useActionState(login, null);
   return (
     <>
       <main className="max-w-2xl mx-auto">
@@ -20,9 +22,22 @@ export default function Login() {
             로그인
           </h1>
         </section>
-        <form className="flex flex-col gap-4 p-8">
-          <TextInput placeholder="아이디" />
-          <TextInput type="password" placeholder="비밀번호" />
+        <form action={action} className="flex flex-col gap-4 p-8">
+          <TextInput
+            name="email"
+            type="email"
+            placeholder="이메일"
+            required={true}
+            errors={state?.fieldErrors.email}
+          />
+          <TextInput
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            required={true}
+            errors={state?.fieldErrors.password}
+            minLength={PASSWORD_MIN_LENGTH}
+          />
           <SubmitButton text="로그인" />
         </form>
         <div className="px-8 pb-8 flex justify-center">

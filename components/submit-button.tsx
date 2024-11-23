@@ -1,9 +1,9 @@
 import { cls } from "@/libs/cls";
 import { NextPage } from "next";
+import { useFormStatus } from "react-dom";
 
 interface SubmitButtonProps {
   text: string;
-  loading?: boolean;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   color?: "violet" | "red" | "gray";
@@ -11,7 +11,6 @@ interface SubmitButtonProps {
 
 const SubmitButton: NextPage<SubmitButtonProps> = ({
   text,
-  loading,
   type = "submit",
   onClick,
   color = "violet",
@@ -26,7 +25,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
         return "bg-gray-200 focus:ring-gray-400 text-black";
     }
   };
-
+  const { pending } = useFormStatus();
   return (
     <button
       type={type}
@@ -36,7 +35,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
         buttonColor(color)
       )}
     >
-      {loading ? "로딩 중..." : text}
+      {pending ? "로딩 중..." : text}
     </button>
   );
 };

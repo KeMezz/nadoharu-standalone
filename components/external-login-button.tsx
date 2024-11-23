@@ -6,7 +6,7 @@ interface ExternalLoginButtonProps {
 
 const ExternalLoginButton: NextPage<ExternalLoginButtonProps> = ({ icon }) => {
   return (
-    <button className="flex justify-center items-center w-16 h-16 bg-gray-100 text-gray-900 rounded-full hover:bg-violet-100 hover:text-violet-400 transition-colors">
+    <button className="flex justify-center items-center w-16 h-16 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-full hover:bg-violet-100 hover:text-violet-400 transition-colors">
       {icons[icon]}
     </button>
   );
