@@ -11,11 +11,11 @@ export default function LoginForm() {
   return (
     <form action={action} className="flex flex-col gap-4 p-8">
       <TextInput
-        name="email"
-        type="email"
-        placeholder="이메일"
+        name="login_id"
+        type="text"
+        placeholder="아이디"
         required={true}
-        errors={state?.fieldErrors.email}
+        errors={state?.fieldErrors.login_id}
       />
       <TextInput
         name="password"

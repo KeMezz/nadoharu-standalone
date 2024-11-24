@@ -27,3 +27,8 @@ export const EMAIL_ERROR_MESSAGE = "올바른 형식의 이메일을 입력해�
 export const PHONE_ERROR_MESSAGE = "올바른 형식의 전화번호를 입력해주세요";
 export const PHONE_NOT_EXISTS_MESSAGE = "존재하지 않는 전화번호에요";
 export const INVALID_USER_MESSAGE = `사용자 정보가 올바르지 않아요`;
+
+// Friendship Status
+export const FRIEND_REJECTED = 0;
+export const FRIEND_ACCEPTED = 1;
+export const FRIEND_PENDING = 2;

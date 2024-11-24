@@ -32,9 +32,11 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
+      disabled={pending}
       className={cls(
         "px-4 py-2 rounded-md outline-none focus:ring-2 ",
-        buttonColor(color)
+        buttonColor(color),
+        pending ? "bg-neutral-400 text-black" : ""
       )}
     >
       {pending ? "로딩 중..." : text}

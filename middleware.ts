@@ -11,15 +11,21 @@ const publicOnlyUrls: Routes = {
 };
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  if (pathname.startsWith("/_next") || pathname.startsWith("/static")) {
+    return NextResponse.next();
+  }
+
   const session = await getSession();
-  const exists = publicOnlyUrls[request.nextUrl.pathname];
+  const exists = publicOnlyUrls[pathname];
   if (!session.id) {
     if (!exists) {
+      console.log(session.id, request.nextUrl.pathname, exists);
       return NextResponse.redirect(new URL("/login", request.url));
     }
   } else {
     if (exists) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/posts", request.url));
     }
   }
 }

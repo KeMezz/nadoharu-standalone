@@ -39,7 +39,7 @@ const Layout: NextPage<LayoutProps> = ({
 }) => {
   return (
     <main className="max-w-2xl mx-auto">
-      <header className="px-4 h-14 border-b-2 border-violet-600 dark:border-violet-300 text-center fixed flex justify-between top-0 max-w-2xl w-full bg-white dark:bg-neutral-800 z-20 shadow-md">
+      <header className="px-4 h-14 border-b-2 border-violet-600 dark:border-violet-400 text-center fixed flex justify-between top-0 max-w-2xl w-full bg-white dark:bg-neutral-800 z-20 shadow-md">
         <section className="flex items-center gap-4">
           {canGoBack ? (
             <button>
@@ -56,7 +56,7 @@ const Layout: NextPage<LayoutProps> = ({
               href={`/users/${profile.account_id}`}
               className="flex items-center gap-3"
             >
-              <div className="w-10 h-10 bg-gray-300 rounded-md" />
+              <div className="w-10 h-10 bg-neutral-300 rounded-md" />
               <div className="flex flex-col items-start">
                 <h3 className="font-semibold text-sm">{profile.name}</h3>
                 <p className="text-gray-400 text-xs">@{profile.account_id}</p>
@@ -107,12 +107,10 @@ const Layout: NextPage<LayoutProps> = ({
           ) : null}
         </section>
       </header>
-      <section className={"mt-14" + canGoBack ? "" : " mb-20"}>
-        {children}
-      </section>
+      <section className={"mt-14 mb-20"}>{children}</section>
       {canGoBack ? null : (
-        <footer className="max-w-2xl w-full grid grid-cols-4 mx-auto h-20 bg-violet-600 fixed bottom-0 border-t-2 border-violet-800 z-20">
-          <FooterItem title="모아보는" link="/home" />
+        <footer className="max-w-2xl w-full grid grid-cols-4 mx-auto h-20 bg-violet-600 dark:bg-neutral-800 fixed bottom-0 border-t-2 border-violet-800 dark:border-violet-400 z-20">
+          <FooterItem title="모아보는" link="/posts" />
           <FooterItem title="메시지" link="/chat" />
           <FooterItem title="나는" link="/me" />
           <FooterItem title="친구들은" link="/friends" />

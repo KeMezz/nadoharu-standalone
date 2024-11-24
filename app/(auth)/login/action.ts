@@ -7,10 +7,10 @@ import bcrypt from "bcrypt";
 import getSession from "@/libs/session";
 import { redirect } from "next/navigation";
 
-const checkEmailExists = async (email: string) => {
+const checkLoginIdExists = async (login_id: string) => {
   const user = await db.user.findUnique({
     where: {
-      email,
+      login_id,
     },
     select: {
       id: true,
@@ -21,11 +21,9 @@ const checkEmailExists = async (email: string) => {
 };
 
 const formSchema = z.object({
-  email: z
+  login_id: z
     .string()
-    .email({ message: constants.EMAIL_ERROR_MESSAGE })
-    .toLowerCase()
-    .refine(checkEmailExists, constants.INVALID_USER_MESSAGE),
+    .refine(checkLoginIdExists, constants.INVALID_USER_MESSAGE),
   password: z
     .string()
     .min(constants.PASSWORD_MIN_LENGTH, constants.INVALID_USER_MESSAGE)
@@ -34,7 +32,7 @@ const formSchema = z.object({
 
 export async function login(_: any, formData: FormData) {
   const data = {
-    email: formData.get("email"),
+    login_id: formData.get("login_id"),
     password: formData.get("password"),
   };
   const result = await formSchema.spa(data);
@@ -44,7 +42,7 @@ export async function login(_: any, formData: FormData) {
 
   const user = await db.user.findUnique({
     where: {
-      email: result.data.email,
+      login_id: result.data.login_id,
     },
     select: {
       id: true,
@@ -52,15 +50,17 @@ export async function login(_: any, formData: FormData) {
     },
   });
   const ok = await bcrypt.compare(result.data.password, user!.password ?? "");
+  console.log("ok", ok);
   if (ok) {
     const session = await getSession();
     session.id = user!.id;
     await session.save();
-    redirect("/home");
+    redirect("/posts");
   } else {
+    console.log("error!");
     return {
       fieldErrors: {
-        email: [constants.INVALID_USER_MESSAGE],
+        login_id: [constants.INVALID_USER_MESSAGE],
         password: [constants.INVALID_USER_MESSAGE],
       },
     };
