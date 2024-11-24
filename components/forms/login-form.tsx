@@ -1,8 +1,8 @@
 "use client";
 
 import { login } from "@/app/(auth)/login/action";
-import SubmitButton from "../submit-button";
-import TextInput from "../text-input";
+import SubmitButton from "../buttons/submit-button";
+import TextInput from "../inputs/text-input";
 import { useActionState } from "react";
 import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
 

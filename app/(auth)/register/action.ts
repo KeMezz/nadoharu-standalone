@@ -101,5 +101,5 @@ export default async function register(_: any, formData: FormData) {
   session.id = user.id;
   await session.save();
 
-  redirect("/");
+  redirect("/home");
 }

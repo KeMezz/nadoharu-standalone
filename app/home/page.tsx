@@ -1,5 +1,9 @@
-import Layout from "@/components/layout";
-import EmptyStateFooter from "@/components/empty-state-has-footer";
+import Layout from "@/components/layouts/layout";
+import EmptyStateFooter from "@/components/layouts/empty-state-has-footer";
+
+export const metadata = {
+  title: "모아보는",
+};
 
 export default function Timeline() {
   return (

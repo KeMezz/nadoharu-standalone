@@ -1,4 +1,4 @@
-import ExternalLoginButton from "@/components/external-login-button";
+import ExternalLoginButton from "@/components/buttons/external-login-button";
 import Link from "next/link";
 import LoginForm from "@/components/forms/login-form";
 
