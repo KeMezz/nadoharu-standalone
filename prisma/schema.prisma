@@ -56,6 +56,7 @@ model Token {
 model Post {
   id         Int       @id @default(autoincrement())
   content    String
+  tags       String?
   views      Int       @default(0)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cls } from "@/libs/cls";
+import { cls } from "@/libs/utils";
 
 type Link = "/posts" | "/chat" | "/me" | "/friends";
 

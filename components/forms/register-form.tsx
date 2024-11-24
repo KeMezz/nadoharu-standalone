@@ -49,7 +49,7 @@ export default function RegisterForm() {
         onChange={handleInputChange}
         required={true}
         errors={state?.fieldErrors.username}
-        warning="다른 이용자에게 불쾌감을 줄 수 있는 별명은 삼가해주세요!"
+        warning="다른 이용자에게 불쾌감을 줄 수 있는 별명은 삼가주세요!"
       />
       <SubmitButton text="회원가입" />
     </form>

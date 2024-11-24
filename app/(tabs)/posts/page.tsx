@@ -4,6 +4,7 @@ import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { FRIEND_ACCEPTED } from "@/libs/constants";
 import { notFound } from "next/navigation";
+import Timeline from "@/components/timeline";
 
 async function getFriends(userId: number) {
   const friends = await db.friendship.findMany({
@@ -34,12 +35,19 @@ async function getFeeds(userId: number) {
         in: feedUserIds,
       },
     },
+    include: {
+      user: true,
+    },
   });
   const reposts = await db.repost.findMany({
     where: {
       userId: {
         in: feedUserIds,
       },
+    },
+    include: {
+      user: true,
+      post: true,
     },
   });
 
@@ -62,7 +70,7 @@ export default async function Posts() {
 
   return (
     <Layout title="모아보는" showNewPostBtn>
-      <EmptyStateFooter text="친구도 없고 표시할 글도 없고.." />
+      <Timeline posts={posts} reposts={reposts} />
     </Layout>
   );
 }
