@@ -11,6 +11,7 @@ import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
+import { useRouter } from "next/navigation";
 
 interface LayoutProps {
   title?: string;
@@ -37,13 +38,14 @@ const Layout: NextPage<LayoutProps> = ({
   showNewChatBtn,
   moreBtns,
 }) => {
+  const router = useRouter();
   return (
     <main className="max-w-2xl mx-auto">
       <header className="px-4 h-14 border-b-2 border-violet-600 dark:border-violet-400 text-center fixed flex justify-between top-0 max-w-2xl w-full bg-white dark:bg-neutral-800 z-20 shadow-md">
         <section className="flex items-center gap-4">
           {canGoBack ? (
             <button>
-              <ChevronLeftIcon className="size-6" />
+              <ChevronLeftIcon onClick={router.back} className="size-6" />
             </button>
           ) : null}
           {!profile && title ? (
@@ -75,7 +77,7 @@ const Layout: NextPage<LayoutProps> = ({
           ) : null}
           {showNewPostBtn ? (
             <Link
-              href="/posts/new"
+              href="/posts/upload"
               className="text-violet-600 dark:text-violet-400"
             >
               <PencilSquareIcon className="size-6" />

@@ -32,8 +32,8 @@ export default function PostPreview({
         </section>
 
         {/* 본문 & 태그 */}
-        <p className="text-sm">{content}</p>
-        <p className="text-sm text-neutral-400 font-light">{tags}</p>
+        <p>{content}</p>
+        <p className="text-sm text-neutral-400">{tags}</p>
 
         {/* 버튼부 */}
         <div className="flex gap-2 self-end mt-4 text-neutral-600 dark:text-neutral-100">

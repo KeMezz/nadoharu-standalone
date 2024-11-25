@@ -5,14 +5,12 @@ import {
 import { InputHTMLAttributes } from "react";
 
 interface TextInputProps {
-  defaultValue?: string;
   loading?: boolean;
   errors?: string[];
   warning?: string;
 }
 
 export default function TextInput({
-  defaultValue,
   errors = [],
   loading,
   warning,
@@ -24,9 +22,8 @@ export default function TextInput({
         autoSave="off"
         autoComplete="off"
         disabled={loading}
-        defaultValue={defaultValue}
         {...attrs}
-        className="appearance-none w-full border border-gray-300 rounded-md shadow-sm placeholder-gray-400 outline-none focus:ring-2 focus:ring-violet-600 focus:border-violet-600 px-4 py-2 dark:bg-neutral-700 dark:text-white"
+        className="appearance-none w-full border border-neutral-300 rounded-md shadow-sm placeholder-neutral-400 outline-none focus:ring-2 focus:ring-violet-600 focus:border-violet-600 px-4 py-2 dark:bg-neutral-700 dark:text-white"
       />
       {warning ? (
         <p className="font-medium flex items-center gap-2 text-sm">
