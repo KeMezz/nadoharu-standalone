@@ -9,7 +9,6 @@ import { revalidatePath } from "next/cache";
 import { CommentForm } from "@/components/forms/comment-form";
 
 const commentSchema = z.object({
-  postId: z.string(),
   content: z
     .string()
     .max(
@@ -24,7 +23,6 @@ export async function createComment(
   postId: number
 ) {
   const data = {
-    postId: formData.get("postId"),
     content: formData.get("content"),
   };
   const result = await commentSchema.spa(data);

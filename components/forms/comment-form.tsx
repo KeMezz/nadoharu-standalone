@@ -19,6 +19,7 @@ export default function CommentForm({ postId }: { postId: number }) {
   return (
     <form action={action}>
       <ChatInput
+        name="content"
         placeholder="댓글 입력.."
         errors={state?.fieldErrors?.content}
       />
