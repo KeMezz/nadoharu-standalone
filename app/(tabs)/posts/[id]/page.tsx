@@ -1,4 +1,3 @@
-import ChatInput from "@/components/chat-input";
 import Comment from "@/components/comment";
 import Layout, { MoreBtns } from "@/components/layouts/layout";
 import db from "@/libs/db";
@@ -11,6 +10,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { notFound } from "next/navigation";
+import CommentForm from "@/components/forms/comment-form";
 
 async function getIsUserPost(postUserId: number) {
   const session = await getSession();
@@ -93,8 +93,8 @@ export default async function PostDetail({
           </div>
         </div>
 
-        {/* 나도 */}
         <div>
+          {/* 나도 */}
           <div className="flex gap-4 px-4 h-16 items-center border-b">
             <button className="flex items-center gap-1 border shadow-sm rounded-md px-3 py-2 text-sm">
               <ArrowPathRoundedSquareIcon className="size-4" />
@@ -106,6 +106,7 @@ export default async function PostDetail({
           {/* 댓글 */}
           {post.comments.map((comment) => (
             <Comment
+              key={comment.id}
               comment={comment.content}
               username={comment.user.username}
               accountId={comment.user.login_id}
@@ -113,10 +114,7 @@ export default async function PostDetail({
           ))}
         </div>
       </section>
-
-      <form>
-        <ChatInput placeholder="댓글 입력.." />
-      </form>
+      <CommentForm postId={postId} />
     </Layout>
   );
 }

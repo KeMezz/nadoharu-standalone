@@ -3,6 +3,7 @@ import { NextPage } from "next";
 
 interface ChatInputProps {
   placeholder?: string;
+  errors?: string[];
 }
 
 const ChatInput: NextPage<ChatInputProps> = ({ placeholder }) => {

@@ -10,6 +10,7 @@ export const LOGIN_ID_MAX_LENGTH = 50;
 export const LOGIN_ID_REGEX = new RegExp(/^[a-zA-Z]*$/);
 export const POST_CONTENT_MAX_LENGTH = 150;
 export const POST_TAGS_MAX_LENGTH = 150;
+export const COMMENT_CONTENT_MAX_LENGTH = 1000;
 
 // Error messages
 export const INVALID_TYPE_ERROR_MESSAGE = "유효하지 않은 형식입니다";
@@ -32,6 +33,8 @@ export const INVALID_USER_MESSAGE = `사용자 정보가 올바르지 않아요`
 export const POST_CONTENT_REQUIRED_ERROR_MESSAGE = `빈 글은 투고할 수 없어요`;
 export const POST_CONTENT_MAX_ERROR_MESSAGE = `최대 150자의 글만 업로드 할 수 있어요`;
 export const POST_TAGS_MAX_ERROR_MESSAGE = `태그가 너무 길어요`;
+export const COMMENT_CONTENT_MAX_ERROR_MESSAGE = `최대 ${COMMENT_CONTENT_MAX_LENGTH}자의 댓글만 작성할 수 있어요`;
+export const COMMENT_CONTENT_REQUIRED_ERROR_MESSAGE = `댓글 내용을 입력해주세요`;
 
 // Friendship Status
 export const FRIEND_REJECTED = 0;

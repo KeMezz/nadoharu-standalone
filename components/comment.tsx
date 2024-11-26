@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import Link from "next/link";
 
 interface CommentProps {
@@ -8,7 +7,11 @@ interface CommentProps {
   accountId: string;
 }
 
-const Comment: NextPage<CommentProps> = ({ username, comment, accountId }) => {
+export default function Comment({
+  username,
+  comment,
+  accountId,
+}: CommentProps) {
   return (
     <div className="p-4 flex gap-4 align-start border-b">
       <Link href={`/users/${accountId}`}>
@@ -22,6 +25,4 @@ const Comment: NextPage<CommentProps> = ({ username, comment, accountId }) => {
       </div>
     </div>
   );
-};
-
-export default Comment;
+}
