@@ -1,5 +1,4 @@
 import Layout from "@/components/layouts/layout";
-import EmptyStateFooter from "@/components/layouts/empty-state-has-footer";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { FRIEND_ACCEPTED } from "@/libs/constants";
@@ -36,7 +35,19 @@ async function getFeeds(userId: number) {
       },
     },
     include: {
-      user: true,
+      user: {
+        select: {
+          username: true,
+          login_id: true,
+          avatar: true,
+        },
+      },
+      _count: {
+        select: {
+          comments: true,
+          reposts: true,
+        },
+      },
     },
   });
   const reposts = await db.repost.findMany({
@@ -46,8 +57,30 @@ async function getFeeds(userId: number) {
       },
     },
     include: {
-      user: true,
-      post: true,
+      user: {
+        select: {
+          username: true,
+          login_id: true,
+          avatar: true,
+        },
+      },
+      post: {
+        include: {
+          user: {
+            select: {
+              username: true,
+              login_id: true,
+              avatar: true,
+            },
+          },
+          _count: {
+            select: {
+              comments: true,
+              reposts: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -66,7 +99,6 @@ export default async function Posts() {
   }
 
   const { posts, reposts } = await getFeeds(userId);
-  console.log(posts, reposts);
 
   return (
     <Layout title="모아보는" showNewPostBtn>

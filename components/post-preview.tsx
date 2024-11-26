@@ -13,7 +13,7 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({
-  post: { id, user, content, tags, created_at },
+  post: { id, user, content, tags, created_at, _count },
 }: PostPreviewProps) {
   return (
     <Link href={`/posts/${id}`}>
@@ -39,11 +39,11 @@ export default function PostPreview({
         <div className="flex gap-2 self-end mt-4 text-neutral-600 dark:text-neutral-100">
           <button className="flex items-center gap-1 border py-1 px-2 rounded-md bg-white hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-700">
             <ArrowPathRoundedSquareIcon className="size-4" />
-            <p className="text-sm">0</p>
+            <p className="text-sm">{_count.reposts}</p>
           </button>
           <button className="flex items-center gap-1 border py-1 px-2 rounded-md bg-white hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-700">
             <ChatBubbleOvalLeftEllipsisIcon className="size-4" />
-            <p className="text-sm">0</p>
+            <p className="text-sm">{_count.comments}</p>
           </button>
         </div>
       </div>

@@ -1,13 +1,26 @@
-import { Post, Repost, User } from "@prisma/client";
+import { Post, Repost } from "@prisma/client";
 import PostPreview from "./post-preview";
+import EmptyStateFooter from "@/components/layouts/empty-state-has-footer";
 
 export interface PostWithUser extends Post {
-  user: User;
+  user: {
+    username: string;
+    login_id: string;
+    avatar: string | null;
+  };
+  _count: {
+    comments: number;
+    reposts: number;
+  };
 }
 
 export interface RepostWithUser extends Repost {
-  user: User;
-  post: Post;
+  user: {
+    username: string;
+    login_id: string;
+    avatar: string | null;
+  };
+  post: PostWithUser;
 }
 
 interface TimelineProps {
@@ -24,10 +37,13 @@ export default function Timeline({ posts, reposts }: TimelineProps) {
 
   return (
     <section className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
-      {allPosts.map((post) =>
-        "content" in post ? <PostPreview post={post} /> : null
+      {allPosts.length ? (
+        allPosts.map((post) =>
+          "content" in post ? <PostPreview post={post} key={post.id} /> : null
+        )
+      ) : (
+        <EmptyStateFooter text="당신은 친구도 없고 글도 없네요 호호" />
       )}
-      {/* <EmptyStateFooter text="친구도 없고 표시할 글도 없고.." /> */}
     </section>
   );
 }
