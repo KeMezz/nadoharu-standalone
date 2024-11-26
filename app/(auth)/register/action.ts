@@ -6,6 +6,14 @@ import db from "@/libs/db";
 import bcrypt from "bcrypt";
 import getSession from "@/libs/session";
 import { redirect } from "next/navigation";
+import { ActionPrevState } from "@/types/form";
+
+interface RegisterForm {
+  login_id: string;
+  password: string;
+  confirm_password: string;
+  username: string;
+}
 
 const checkPasswords = ({
   password,
@@ -72,7 +80,10 @@ const formSchema = z
     path: ["confirm_password"],
   });
 
-export default async function register(_: any, formData: FormData) {
+export default async function register(
+  _: ActionPrevState<RegisterForm>,
+  formData: FormData
+) {
   const data = {
     login_id: formData.get("login_id"),
     password: formData.get("password"),

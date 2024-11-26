@@ -6,6 +6,12 @@ import getSession from "@/libs/session";
 import db from "@/libs/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { ActionPrevState } from "@/types/form";
+
+interface UploadPostForm {
+  content: string;
+  tags: string;
+}
 
 const postSchema = z.object({
   content: z
@@ -19,7 +25,10 @@ const postSchema = z.object({
     .max(constants.POST_TAGS_MAX_LENGTH, constants.POST_TAGS_MAX_ERROR_MESSAGE),
 });
 
-export async function uploadPost(_: any, formData: FormData) {
+export async function uploadPost(
+  _: ActionPrevState<UploadPostForm>,
+  formData: FormData
+) {
   const data = {
     content: formData.get("content"),
     tags: formData.get("tags"),

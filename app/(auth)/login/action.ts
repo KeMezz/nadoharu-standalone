@@ -7,6 +7,14 @@ import bcrypt from "bcrypt";
 import getSession from "@/libs/session";
 import { redirect } from "next/navigation";
 
+type LoginActionState = {
+  fieldErrors: {
+    login_id?: string[];
+    password?: string[];
+  };
+  formErrors?: string[];
+};
+
 const checkLoginIdExists = async (login_id: string) => {
   const user = await db.user.findUnique({
     where: {
@@ -30,7 +38,7 @@ const formSchema = z.object({
     .regex(constants.PASSWORD_REGEX, constants.INVALID_USER_MESSAGE),
 });
 
-export async function login(_: any, formData: FormData) {
+export async function login(_: LoginActionState | null, formData: FormData) {
   const data = {
     login_id: formData.get("login_id"),
     password: formData.get("password"),
@@ -50,14 +58,12 @@ export async function login(_: any, formData: FormData) {
     },
   });
   const ok = await bcrypt.compare(result.data.password, user!.password ?? "");
-  console.log("ok", ok);
   if (ok) {
     const session = await getSession();
     session.id = user!.id;
     await session.save();
     redirect("/posts");
   } else {
-    console.log("error!");
     return {
       fieldErrors: {
         login_id: [constants.INVALID_USER_MESSAGE],

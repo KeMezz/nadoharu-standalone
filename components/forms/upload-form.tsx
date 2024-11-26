@@ -5,7 +5,7 @@ import SubmitButton from "../buttons/submit-button";
 import TextInput from "../inputs/text-input";
 import Textarea from "../inputs/textarea";
 import { useActionState } from "react";
-import { uploadPost } from "@/app/(tabs)/posts/upload/action";
+import { uploadPost } from "@/app/(tabs)/posts/upload/action-post";
 
 export default function UploadForm() {
   const [state, action] = useActionState(uploadPost, null);
