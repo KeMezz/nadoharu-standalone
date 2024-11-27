@@ -52,3 +52,33 @@ export async function createComment(
     revalidatePath(`/posts/${postId}`);
   }
 }
+
+export async function repost(
+  prevState: void | null,
+  formData: FormData,
+  postId: number
+) {
+  const session = await getSession();
+  const post = await db.post.findUnique({
+    where: { id: postId },
+    select: {
+      userId: true,
+    },
+  });
+
+  if (post?.userId === session.id) {
+    return { error: "You cannot repost your own post" };
+  }
+  if (!session.id) {
+    return { error: "You must be logged in to repost" };
+  }
+
+  await db.repost.create({
+    data: {
+      userId: session.id,
+      postId,
+    },
+  });
+
+  revalidatePath(`/posts/${postId}`);
+}

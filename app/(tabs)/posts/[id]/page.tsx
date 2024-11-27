@@ -1,21 +1,20 @@
 import Comment from "@/components/comment";
-import Layout, { MoreBtns } from "@/components/layouts/layout";
+import Layout from "@/components/layouts/layout";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { formatRelativeTime } from "@/libs/utils";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
-  ShieldExclamationIcon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { notFound } from "next/navigation";
 import CommentForm from "@/components/forms/comment-form";
+import RepostForm from "@/components/forms/detail-repost-form";
 
-async function getIsUserPost(postUserId: number) {
-  const session = await getSession();
-  return session?.id === postUserId;
-}
+// async function getIsUserPost(postUserId: number) {
+//   const session = await getSession();
+//   return session?.id === postUserId;
+// }
 
 async function getPost(postId: number) {
   const post = await db.post.findUnique({
@@ -35,6 +34,15 @@ async function getPost(postId: number) {
   return post;
 }
 
+async function getIsReposted(postId: number) {
+  const session = await getSession();
+  const reposted = await db.repost.findFirst({
+    where: { userId: session?.id, postId },
+  });
+
+  return Boolean(reposted);
+}
+
 export default async function PostDetail({
   params,
 }: {
@@ -49,21 +57,23 @@ export default async function PostDetail({
   if (!post) {
     return notFound();
   }
-  const isUserPost = await getIsUserPost(post.userId);
+  const isReposted = await getIsReposted(postId);
 
-  const moreBtns: MoreBtns = [
-    isUserPost
-      ? {
-          action: () => console.log("글 삭제하기 버튼 클릭"),
-          name: "글 삭제하기",
-          icon: <TrashIcon className="size-5" />,
-        }
-      : {
-          action: () => console.log("신고하기 버튼 클릭"),
-          name: "신고하기",
-          icon: <ShieldExclamationIcon className="size-5" />,
-        },
-  ];
+  // const isUserPost = await getIsUserPost(post.userId);
+
+  // const moreBtns: MoreBtns = [
+  //   isUserPost
+  //     ? {
+  //         action: () => console.log("글 삭제하기 버튼 클릭"),
+  //         name: "글 삭제하기",
+  //         icon: <TrashIcon className="size-5" />,
+  //       }
+  //     : {
+  //         action: () => console.log("신고하기 버튼 클릭"),
+  //         name: "신고하기",
+  //         icon: <ShieldExclamationIcon className="size-5" />,
+  //       },
+  // ];
 
   if (!post) {
     return notFound();
@@ -97,10 +107,7 @@ export default async function PostDetail({
         <div>
           {/* 나도 */}
           <div className="flex gap-4 px-4 h-16 items-center border-b">
-            <button className="flex items-center gap-1 border shadow-sm rounded-md px-3 py-2 text-sm">
-              <ArrowPathRoundedSquareIcon className="size-4" />
-              나도
-            </button>
+            <RepostForm postId={postId} isReposted={isReposted} />
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
           <div className="flex flex-col divide-y">
