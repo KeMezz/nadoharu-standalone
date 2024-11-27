@@ -1,27 +1,34 @@
 import Link from "next/link";
-
+import Image from "next/image";
 interface CommentProps {
-  avatar?: string;
+  avatar: string | null;
   username: string;
-  comment: string;
+  content: string;
   accountId: string;
 }
 
 export default function Comment({
+  avatar,
   username,
-  comment,
+  content,
   accountId,
 }: CommentProps) {
   return (
-    <div className="p-4 flex gap-4 align-start border-b">
-      <Link href={`/users/${accountId}`}>
-        <div className="w-10 h-10 rounded-md bg-gray-300 flex-shrink-0" />
+    <div className="p-4 flex gap-4 align-start">
+      <Link href={`/users/${accountId}`} className="flex-shrink-0">
+        <Image
+          src={avatar ?? ""}
+          alt={username}
+          width={40}
+          height={40}
+          className="rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
+        />
       </Link>
       <div className="flex flex-col text-sm gap-1">
         <Link href={`/users/${accountId}`} className="font-semibold">
           {username}
         </Link>
-        <p>{comment}</p>
+        <p>{content}</p>
       </div>
     </div>
   );

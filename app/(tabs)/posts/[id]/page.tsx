@@ -103,16 +103,18 @@ export default async function PostDetail({
             </button>
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
-
-          {/* 댓글 */}
-          {post.comments.map((comment) => (
-            <Comment
-              key={comment.id}
-              comment={comment.content}
-              username={comment.user.username}
-              accountId={comment.user.login_id}
-            />
-          ))}
+          <div className="flex flex-col divide-y">
+            {/* 댓글 */}
+            {post.comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                content={comment.content}
+                username={comment.user.username}
+                accountId={comment.user.login_id}
+                avatar={comment.user.avatar}
+              />
+            ))}
+          </div>
         </div>
       </section>
       <CommentForm postId={postId} />

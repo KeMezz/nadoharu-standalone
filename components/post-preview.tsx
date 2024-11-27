@@ -7,6 +7,7 @@ import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 interface PostPreviewProps {
   post: PostWithUser;
@@ -21,7 +22,13 @@ export default function PostPreview({
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-600 shrink-0 rounded-md" />
+            <Image
+              src={user.avatar ?? ""}
+              alt={user.username}
+              width={40}
+              height={40}
+              className="size-10 rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
+            />
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{user.username}</h2>
             </div>
