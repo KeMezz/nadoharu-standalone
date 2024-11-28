@@ -54,7 +54,7 @@ export async function createComment(
 }
 
 export async function repost(
-  prevState: void | null,
+  prevState: void | null | { error: string },
   formData: FormData,
   postId: number
 ) {
