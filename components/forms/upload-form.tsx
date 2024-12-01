@@ -14,6 +14,7 @@ export default function UploadForm() {
       <Textarea
         placeholder="무슨 일이 일어나고 있나요?"
         name="content"
+        required={true}
         errors={state?.fieldErrors.content}
       />
       <TextInput

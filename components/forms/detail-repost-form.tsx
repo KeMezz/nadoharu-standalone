@@ -1,9 +1,12 @@
 "use client";
 
 import { repost } from "@/app/(tabs)/posts/[id]/action";
+import {
+  ResponseWithAlert,
+  useActionWithAlert,
+} from "@/hooks/use-action-with-alert";
 import { cls } from "@/libs/utils";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid";
-import { useActionState } from "react";
 
 interface RepostFormProps {
   postId: number;
@@ -11,12 +14,13 @@ interface RepostFormProps {
 }
 
 export default function RepostForm({ postId, isReposted }: RepostFormProps) {
-  const [state, action] = useActionState(
-    async (prevState: void | null | { error: string }, formData: FormData) =>
-      repost(prevState, formData, postId),
-    null
+  const [, action] = useActionWithAlert<ResponseWithAlert>(
+    async (prevState: ResponseWithAlert | void | null) => {
+      const result = await repost(prevState, new FormData(), postId);
+      return result;
+    },
+    { success: false }
   );
-  console.log(state);
 
   return (
     <form action={action}>
