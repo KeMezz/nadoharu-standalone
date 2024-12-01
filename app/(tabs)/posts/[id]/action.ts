@@ -7,6 +7,7 @@ import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { revalidatePath } from "next/cache";
 import { CommentForm } from "@/components/forms/comment-form";
+import { ResponseWithAlert } from "@/hooks/use-action-with-alert";
 
 const commentSchema = z.object({
   content: z
@@ -54,7 +55,7 @@ export async function createComment(
 }
 
 export async function repost(
-  prevState: void | null | { error: string },
+  prevState: void | ResponseWithAlert | null,
   formData: FormData,
   postId: number
 ) {
@@ -67,10 +68,24 @@ export async function repost(
   });
 
   if (post?.userId === session.id) {
-    return { error: "You cannot repost your own post" };
+    return {
+      success: false,
+      alert: {
+        visible: true,
+        title: "잠깐!",
+        description: "자신의 게시물에는 공감할 수 없어요.",
+      },
+    };
   }
   if (!session.id) {
-    return { error: "You must be logged in to repost" };
+    return {
+      success: false,
+      alert: {
+        visible: true,
+        title: "잠깐!",
+        description: "먼저 로그인을 해주세요.",
+      },
+    };
   }
 
   await db.repost.create({
@@ -81,4 +96,6 @@ export async function repost(
   });
 
   revalidatePath(`/posts/${postId}`);
+
+  return { success: true };
 }
