@@ -16,6 +16,7 @@ interface UploadPostForm {
 const postSchema = z.object({
   content: z
     .string({ required_error: constants.POST_CONTENT_REQUIRED_ERROR_MESSAGE })
+    .min(1, constants.POST_CONTENT_REQUIRED_ERROR_MESSAGE)
     .max(
       constants.POST_CONTENT_MAX_LENGTH,
       constants.POST_CONTENT_MAX_ERROR_MESSAGE
