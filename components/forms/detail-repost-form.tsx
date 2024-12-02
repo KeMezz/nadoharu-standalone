@@ -1,6 +1,6 @@
 "use client";
 
-import { repost } from "@/app/(tabs)/posts/[id]/action";
+import { repost, unrepost } from "@/app/(tabs)/posts/[id]/action";
 import {
   ResponseWithAlert,
   useActionWithAlert,
@@ -14,7 +14,7 @@ interface RepostFormProps {
 }
 
 export default function RepostForm({ postId, isReposted }: RepostFormProps) {
-  const [, action] = useActionWithAlert<ResponseWithAlert>(
+  const [, repostAction] = useActionWithAlert<ResponseWithAlert>(
     async (prevState: ResponseWithAlert | void | null) => {
       const result = await repost(prevState, new FormData(), postId);
       return result;
@@ -22,8 +22,16 @@ export default function RepostForm({ postId, isReposted }: RepostFormProps) {
     { success: false }
   );
 
+  const [, unrepostAction] = useActionWithAlert<ResponseWithAlert>(
+    async (prevState: ResponseWithAlert | void | null) => {
+      const result = await unrepost(prevState, new FormData(), postId);
+      return result;
+    },
+    { success: false }
+  );
+
   return (
-    <form action={action}>
+    <form action={isReposted ? unrepostAction : repostAction}>
       <button
         className={cls(
           "flex items-center gap-1 border shadow-sm rounded-md px-3 py-2 text-sm",
