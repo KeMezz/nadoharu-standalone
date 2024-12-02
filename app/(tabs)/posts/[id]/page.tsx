@@ -114,7 +114,7 @@ export default async function PostDetail({
                 repostCount={post._count.reposts}
               />
             ) : (
-              <div className="flex items-center gap-1 border shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 text-neutral-400 cursor-not-allowed">
+              <div className="flex items-center gap-1 border dark:border-neutral-800 shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed">
                 <ArrowPathRoundedSquareIcon className="size-4" />
                 <span>나도</span>
                 <span>{post._count.reposts}</span>
