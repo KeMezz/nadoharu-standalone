@@ -11,11 +11,6 @@ import { notFound } from "next/navigation";
 import CommentForm from "@/components/forms/comment-form";
 import RepostForm from "@/components/forms/detail-repost-form";
 
-// async function getIsUserPost(postUserId: number) {
-//   const session = await getSession();
-//   return session?.id === postUserId;
-// }
-
 async function getPost(postId: number) {
   const post = await db.post.findUnique({
     where: {
@@ -43,6 +38,11 @@ async function getIsReposted(postId: number) {
   return Boolean(reposted);
 }
 
+async function getIsUserPost(postUserId: number) {
+  const session = await getSession();
+  return session?.id === postUserId;
+}
+
 export default async function PostDetail({
   params,
 }: {
@@ -59,7 +59,7 @@ export default async function PostDetail({
   }
   const isReposted = await getIsReposted(postId);
 
-  // const isUserPost = await getIsUserPost(post.userId);
+  const isUserPost = await getIsUserPost(post.userId);
 
   // const moreBtns: MoreBtns = [
   //   isUserPost
@@ -107,7 +107,19 @@ export default async function PostDetail({
         <div>
           {/* 나도 */}
           <div className="flex gap-4 px-4 h-16 items-center border-b">
-            <RepostForm postId={postId} isReposted={isReposted} />
+            {!isUserPost ? (
+              <RepostForm
+                postId={postId}
+                isReposted={isReposted}
+                repostCount={post._count.reposts}
+              />
+            ) : (
+              <div className="flex items-center gap-1 border dark:border-neutral-800 shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed">
+                <ArrowPathRoundedSquareIcon className="size-4" />
+                <span>나도</span>
+                <span>{post._count.reposts}</span>
+              </div>
+            )}
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
           <div className="flex flex-col divide-y">
