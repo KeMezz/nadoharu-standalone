@@ -37,9 +37,18 @@ async function getFeeds(userId: number) {
     include: {
       user: {
         select: {
+          id: true,
           username: true,
           login_id: true,
           avatar: true,
+        },
+      },
+      reposts: {
+        where: {
+          userId,
+        },
+        select: {
+          id: true,
         },
       },
       _count: {
@@ -59,6 +68,7 @@ async function getFeeds(userId: number) {
     include: {
       user: {
         select: {
+          id: true,
           username: true,
           login_id: true,
           avatar: true,
@@ -68,9 +78,18 @@ async function getFeeds(userId: number) {
         include: {
           user: {
             select: {
+              id: true,
               username: true,
               login_id: true,
               avatar: true,
+            },
+          },
+          reposts: {
+            where: {
+              userId,
+            },
+            select: {
+              id: true,
             },
           },
           _count: {
@@ -102,7 +121,7 @@ export default async function Posts() {
 
   return (
     <Layout title="모아보는" showNewPostBtn>
-      <Timeline posts={posts} reposts={reposts} />
+      <Timeline posts={posts} reposts={reposts} userId={userId} />
     </Layout>
   );
 }
