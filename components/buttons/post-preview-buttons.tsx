@@ -50,17 +50,17 @@ export default function PostPreviewButtons({
         <button
           type="button"
           onClick={onRepostClick}
-          className={`flex items-center gap-1 border py-1 px-2 rounded-md bg-white hover:bg-neutral-100 ${
+          className={`flex items-center gap-1 border py-1 px-2 rounded-md ${
             state.isUserReposted
-              ? "dark:bg-violet-500 dark:hover:bg-violet-400 border-violet-800"
-              : "dark:bg-neutral-900 dark:hover:bg-neutral-700"
+              ? "text-white bg-violet-400 hover:bg-violet-300 dark:bg-violet-500 dark:hover:bg-violet-400 border-violet-600 dark:border-violet-800"
+              : "bg-white hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-700"
           }`}
         >
           <ArrowPathRoundedSquareIcon className="size-4" />
           <p className="text-sm">{state.repostCount}</p>
         </button>
       ) : (
-        <div className="flex items-center gap-1 border dark:border-neutral-400 py-1 px-2 rounded-md bg-white hover:bg-neutral-100 dark:bg-neutral-600 dark:hover:bg-neutral-600 dark:text-neutral-400 cursor-not-allowed">
+        <div className="flex items-center gap-1 border py-1 px-2 rounded-md bg-white dark:bg-neutral-900 text-neutral-400 dark:border-neutral-400 cursor-not-allowed">
           <ArrowPathRoundedSquareIcon className="size-4" />
           <p className="text-sm">{state.repostCount}</p>
         </div>
