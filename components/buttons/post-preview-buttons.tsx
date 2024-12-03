@@ -52,7 +52,7 @@ export default function PostPreviewButtons({
           onClick={onRepostClick}
           className={`flex items-center gap-1 border py-1 px-2 rounded-md ${
             state.isUserReposted
-              ? "text-white bg-violet-400 hover:bg-violet-300 dark:bg-violet-500 dark:hover:bg-violet-400 border-violet-600 dark:border-violet-800"
+              ? "text-white bg-violet-400 hover:bg-violet-300 border-violet-600 dark:border-violet-800"
               : "bg-white hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-700"
           }`}
         >
