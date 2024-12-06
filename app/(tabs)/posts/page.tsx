@@ -65,6 +65,12 @@ async function getFeeds(userId: number) {
         in: feedUserIds,
       },
     },
+    distinct: ["postId"],
+    orderBy: {
+      post: {
+        created_at: "asc",
+      },
+    },
     include: {
       user: {
         select: {
