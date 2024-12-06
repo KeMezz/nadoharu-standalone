@@ -21,7 +21,7 @@ export default function Comment({
           alt={username}
           width={40}
           height={40}
-          className="rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
+          className="size-10 rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
         />
       </Link>
       <div className="flex flex-col text-sm gap-1">
