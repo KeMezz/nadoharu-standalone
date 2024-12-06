@@ -34,8 +34,15 @@ interface TimelineProps {
 }
 
 export default function Timeline({ posts, reposts, userId }: TimelineProps) {
-  const allPosts = [...posts, ...reposts];
-  allPosts.sort(
+  // 원본 포스트의 ID 목록
+  const originalPostIds = new Set(posts.map((post) => post.id));
+
+  // reposts에서 원본 포스트와 중복되는 것 제외
+  const filteredReposts = reposts.filter(
+    (repost) => !originalPostIds.has(repost.post.id)
+  );
+
+  const allPosts = [...posts, ...filteredReposts].sort(
     (prev, curr) =>
       new Date(curr.created_at).getTime() - new Date(prev.created_at).getTime()
   );
