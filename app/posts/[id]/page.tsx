@@ -1,5 +1,4 @@
 import Comment from "@/components/comment";
-import Layout from "@/components/layouts/layout";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { formatRelativeTime } from "@/libs/utils";
@@ -61,25 +60,11 @@ export default async function PostDetail({
 
   const isUserPost = await getIsUserPost(post.userId);
 
-  // const moreBtns: MoreBtns = [
-  //   isUserPost
-  //     ? {
-  //         action: () => console.log("글 삭제하기 버튼 클릭"),
-  //         name: "글 삭제하기",
-  //         icon: <TrashIcon className="size-5" />,
-  //       }
-  //     : {
-  //         action: () => console.log("신고하기 버튼 클릭"),
-  //         name: "신고하기",
-  //         icon: <ShieldExclamationIcon className="size-5" />,
-  //       },
-  // ];
-
   if (!post) {
     return notFound();
   }
   return (
-    <Layout canGoBack>
+    <>
       <section className="divide-y pb-16">
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2 shadow-md">
@@ -137,6 +122,6 @@ export default async function PostDetail({
         </div>
       </section>
       <CommentForm postId={postId} />
-    </Layout>
+    </>
   );
 }

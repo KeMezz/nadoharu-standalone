@@ -1,6 +1,6 @@
 "use client";
 
-import { repost, unrepost } from "@/app/(tabs)/posts/[id]/action";
+import { repost, unrepost } from "@/app/posts/[id]/action";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
