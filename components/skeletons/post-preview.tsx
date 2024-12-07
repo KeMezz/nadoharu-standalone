@@ -1,4 +1,4 @@
-const SkPostPreview = () => {
+export default function PostPreviewSkeleton() {
   return (
     <article>
       <div className="w-full p-4 text-left flex flex-col gap-3">
@@ -26,6 +26,4 @@ const SkPostPreview = () => {
       </div>
     </article>
   );
-};
-
-export default SkPostPreview;
+}

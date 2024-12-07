@@ -1,4 +1,4 @@
-import SkComment from "@/components/skeletons/sk-comment";
+import CommentSkeleton from "@/components/skeletons/comment";
 
 export default function PostDetailLoading() {
   return (
@@ -23,7 +23,7 @@ export default function PostDetailLoading() {
           <div className="w-20 h-8 bg-neutral-200 dark:bg-neutral-600 rounded-md animate-pulse" />
         </div>
         {[...Array(3)].map((_, index) => (
-          <SkComment key={index} />
+          <CommentSkeleton key={index} />
         ))}
       </div>
     </section>

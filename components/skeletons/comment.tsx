@@ -1,4 +1,4 @@
-export default function SkComment() {
+export default function CommentSkeleton() {
   return (
     <div className="p-4 flex gap-4 align-start border-b">
       <div className="w-10 h-10 rounded-md bg-neutral-200 dark:bg-neutral-600 flex-shrink-0 animate-pulse" />
