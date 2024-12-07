@@ -8,7 +8,7 @@ export default function Me() {
     "use server";
     const session = await getSession();
     session.destroy();
-    redirect("/");
+    redirect("/login");
   }
 
   return (

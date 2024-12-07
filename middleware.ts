@@ -19,12 +19,12 @@ export async function middleware(request: NextRequest) {
   const session = await getSession();
   const exists = publicOnlyUrls[pathname];
   if (!session.id) {
-    if (!exists) {
+    if (!exists || pathname === "/") {
       console.log(session.id, request.nextUrl.pathname, exists);
       return NextResponse.redirect(new URL("/login", request.url));
     }
   } else {
-    if (exists) {
+    if (exists || pathname === "/") {
       return NextResponse.redirect(new URL("/posts", request.url));
     }
   }
