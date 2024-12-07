@@ -1,4 +1,3 @@
-import Layout from "@/components/layouts/layout";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { FRIEND_ACCEPTED } from "@/libs/constants";
@@ -125,9 +124,5 @@ export default async function Posts() {
 
   const { posts, reposts } = await getFeeds(userId);
 
-  return (
-    <Layout title="모아보는" showNewPostBtn>
-      <Timeline posts={posts} reposts={reposts} userId={userId} />
-    </Layout>
-  );
+  return <Timeline posts={posts} reposts={reposts} userId={userId} />;
 }

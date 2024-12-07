@@ -1,7 +1,7 @@
 import { Post, Repost } from "@prisma/client";
 import PostPreview from "./post-preview";
-import EmptyStateFooter from "@/components/layouts/empty-state-has-footer";
 import RepostPreview from "./repost-preview";
+import EmptyState from "./layouts/empty-state";
 
 export interface PostWithUser extends Post {
   user: {
@@ -58,7 +58,7 @@ export default function Timeline({ posts, reposts, userId }: TimelineProps) {
           )
         )
       ) : (
-        <EmptyStateFooter text="당신은 친구도 없고 글도 없네요 호호" />
+        <EmptyState text="당신은 친구도 없고 글도 없네요 호호" />
       )}
     </section>
   );

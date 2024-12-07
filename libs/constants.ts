@@ -40,3 +40,11 @@ export const COMMENT_CONTENT_REQUIRED_ERROR_MESSAGE = `댓글 내용을 입력�
 export const FRIEND_REJECTED = 0;
 export const FRIEND_ACCEPTED = 1;
 export const FRIEND_PENDING = 2;
+
+// Tabs
+export const TABS = [
+  { name: "모아보는", link: "/posts" },
+  { name: "메시지", link: "/chat" },
+  { name: "나는", link: "/me" },
+  { name: "친구들은", link: "/friends" },
+];

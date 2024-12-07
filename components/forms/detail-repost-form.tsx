@@ -1,6 +1,6 @@
 "use client";
 
-import { repost, unrepost } from "@/app/(tabs)/posts/[id]/action";
+import { repost, unrepost } from "@/app/posts/[id]/action";
 import { cls } from "@/libs/utils";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid";
 import { startTransition, useOptimistic } from "react";

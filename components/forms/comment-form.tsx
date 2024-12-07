@@ -2,7 +2,7 @@
 
 import ChatInput from "../chat-input";
 import { useActionState } from "react";
-import { createComment } from "@/app/(tabs)/posts/[id]/action";
+import { createComment } from "@/app/posts/[id]/action";
 import { ActionPrevState } from "@/types/form";
 
 export interface CommentForm {
