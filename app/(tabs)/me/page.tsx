@@ -1,8 +1,7 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import UserTimeline from "@/components/user-timeline";
-import SubmitButton from "@/components/buttons/submit-button";
 import UserInfo from "@/components/layouts/user-info";
 
 export const metadata = {
@@ -94,13 +93,6 @@ async function getReposts(userId: number) {
 }
 
 export default async function Me() {
-  async function logout() {
-    "use server";
-    const session = await getSession();
-    session.destroy();
-    redirect("/login");
-  }
-
   const session = await getSession();
   if (!session.id) {
     return notFound();
@@ -116,9 +108,6 @@ export default async function Me() {
     <>
       <UserInfo isMe={true} profile={user} />
       <UserTimeline posts={posts} reposts={reposts} userId={session.id!} />
-      <form action={logout} className="p-4">
-        <SubmitButton text="로그아웃" />
-      </form>
     </>
   );
 }
