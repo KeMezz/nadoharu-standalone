@@ -20,15 +20,14 @@ export default function Layout({ children }: { children: ReactNode }) {
           >
             <PlusIcon className="size-6" />
           </Link>
-        ) : null}
-        {pathname === "/posts" ? (
+        ) : (
           <Link
             href="/posts/upload"
             className="text-violet-600 dark:text-violet-400"
           >
             <PencilSquareIcon className="size-6" />
           </Link>
-        ) : null}
+        )}
       </Header>
       <section className={"mt-14 mb-20"}>{children}</section>
       <Footer />
