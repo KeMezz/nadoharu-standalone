@@ -129,3 +129,20 @@ export async function unrepost(postId: number) {
     throw new Error("리포스트 취소 실패");
   }
 }
+
+export async function deletePost(postId: number) {
+  try {
+    await db.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        is_deleted: true,
+      },
+    });
+
+    return { success: true };
+  } catch {
+    throw new Error("게시물 삭제 실패");
+  }
+}

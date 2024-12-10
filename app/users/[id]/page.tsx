@@ -25,6 +25,7 @@ async function getPosts(userLoginId: string) {
       user: {
         login_id: userLoginId,
       },
+      is_deleted: false,
     },
     include: {
       user: true,
@@ -41,6 +42,9 @@ async function getReposts(userLoginId: string) {
     where: {
       user: {
         login_id: userLoginId,
+      },
+      post: {
+        is_deleted: false,
       },
     },
     distinct: ["postId"],

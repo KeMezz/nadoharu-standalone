@@ -29,6 +29,7 @@ async function getPosts(userId: number) {
   const posts = await db.post.findMany({
     where: {
       userId,
+      is_deleted: false,
     },
     include: {
       user: true,
@@ -44,6 +45,9 @@ async function getReposts(userId: number) {
   const reposts = await db.repost.findMany({
     where: {
       userId,
+      post: {
+        is_deleted: false,
+      },
     },
     distinct: ["postId"],
     orderBy: {

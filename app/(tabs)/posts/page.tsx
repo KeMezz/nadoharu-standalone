@@ -32,6 +32,7 @@ async function getFeeds(userId: number) {
       userId: {
         in: feedUserIds,
       },
+      is_deleted: false,
     },
     include: {
       user: {
@@ -62,6 +63,9 @@ async function getFeeds(userId: number) {
     where: {
       userId: {
         in: feedUserIds,
+      },
+      post: {
+        is_deleted: false,
       },
     },
     distinct: ["postId"],
