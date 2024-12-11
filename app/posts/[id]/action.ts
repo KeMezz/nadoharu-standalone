@@ -146,3 +146,14 @@ export async function deletePost(postId: number) {
     throw new Error("게시물 삭제 실패");
   }
 }
+
+export async function deleteComment(commentId: number, postId: number) {
+  try {
+    await db.comment.delete({
+      where: { id: commentId },
+    });
+    revalidatePath(`/posts/${postId}`);
+  } catch {
+    throw new Error("댓글 삭제 실패");
+  }
+}
