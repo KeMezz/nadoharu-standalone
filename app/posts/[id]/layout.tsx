@@ -2,7 +2,7 @@ import Header from "@/components/layouts/header";
 import db from "@/libs/db";
 import { notFound } from "next/navigation";
 import getSession from "@/libs/session";
-import PostDetailMoreBtns from "@/components/layouts/post-detail-more-buttons";
+import PostDetailMoreBtns from "@/components/buttons/post-detail-more-buttons";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -51,7 +51,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   return (
     <main className="max-w-2xl mx-auto">
       <Header profile={postUser}>
-        <PostDetailMoreBtns isUserPost={isUserPost} />
+        <PostDetailMoreBtns isUserPost={isUserPost} postId={postId} />
       </Header>
       <section className="mt-14 mb-20">{children}</section>
     </main>

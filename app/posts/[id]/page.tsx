@@ -28,10 +28,9 @@ async function getPost(postId: number) {
   return post;
 }
 
-async function getIsReposted(postId: number) {
-  const session = await getSession();
+async function getIsReposted(postId: number, userId: number) {
   const reposted = await db.repost.findFirst({
-    where: { userId: session?.id, postId },
+    where: { userId, postId },
   });
 
   return Boolean(reposted);
@@ -56,8 +55,12 @@ export default async function PostDetail({
   if (!post) {
     return notFound();
   }
-  const isReposted = await getIsReposted(postId);
+  const session = await getSession();
+  if (!session?.id) {
+    return notFound();
+  }
 
+  const isReposted = await getIsReposted(postId, session.id);
   const isUserPost = await getIsUserPost(post.userId);
 
   if (!post) {
@@ -112,10 +115,13 @@ export default async function PostDetail({
             {post.comments.map((comment) => (
               <Comment
                 key={comment.id}
+                commentId={comment.id}
+                postId={postId}
                 content={comment.content}
                 username={comment.user.username}
                 accountId={comment.user.login_id}
                 avatar={comment.user.avatar}
+                isUserComment={comment.user.id === session?.id}
               />
             ))}
           </div>
