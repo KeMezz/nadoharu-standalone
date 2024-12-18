@@ -1,3 +1,21 @@
+import Link from "next/link";
+
 export default function Chats() {
-  return <div>Chats</div>;
+  return (
+    <section className="flex flex-col divide-y divide-neutral-500">
+      {Array.from({ length: 10 }).map((_, index) => (
+        <Link
+          href={`/chat/${index}`}
+          key={index}
+          className="flex items-center gap-3 p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+        >
+          <div className="size-10 bg-neutral-200 rounded-full" />
+          <div className="flex flex-col">
+            <p className="text-sm font-bold">John Doe</p>
+            <p className="text-sm text-neutral-500">Last message</p>
+          </div>
+        </Link>
+      ))}
+    </section>
+  );
 }
