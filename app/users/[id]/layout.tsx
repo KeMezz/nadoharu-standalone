@@ -31,7 +31,7 @@ export default async function Layout({
 
   return (
     <main className="max-w-2xl mx-auto">
-      <Header profile={user} />
+      <Header profile={user} canGoBack />
       <section className={"mt-14 mb-20"}>{children}</section>
     </main>
   );

@@ -38,6 +38,7 @@ model Friendship {
   status      Int      @default(2) // 0: rejected, 1: accepted, 2: pending
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+  text        String?
   initiator   User     @relation("FriendsAsInitiator", fields: [initiatorId], references: [id])
   initiatorId Int
   recipient   User     @relation("FriendsAsRecipient", fields: [recipientId], references: [id])
