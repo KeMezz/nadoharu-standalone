@@ -50,7 +50,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   return (
     <main className="max-w-2xl mx-auto">
-      <Header profile={postUser}>
+      <Header profile={postUser} canGoBack>
         <PostDetailMoreBtns isUserPost={isUserPost} postId={postId} />
       </Header>
       <section className="mt-14 mb-20">{children}</section>

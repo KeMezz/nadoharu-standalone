@@ -13,6 +13,12 @@ async function getUser(userLoginId: string) {
       login_id: true,
       bio: true,
       avatar: true,
+      _count: {
+        select: {
+          friends: true,
+          friendOf: true,
+        },
+      },
     },
   });
 
