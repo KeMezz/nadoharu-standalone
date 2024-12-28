@@ -126,8 +126,8 @@ export default async function Users({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const user = await getUser(id);
+  const { id: loginId } = await params;
+  const user = await getUser(loginId);
   if (!user) {
     return notFound();
   }
@@ -136,8 +136,8 @@ export default async function Users({
   const isMe = user.id === session?.id;
   const isFriend = await getIsFriend(user.id, session.id!);
 
-  const posts = await getPosts(id);
-  const reposts = await getReposts(id);
+  const posts = await getPosts(loginId);
+  const reposts = await getReposts(loginId);
 
   return (
     <>

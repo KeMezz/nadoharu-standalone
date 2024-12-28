@@ -37,10 +37,10 @@ export default async function Friends({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const friendships = await getFriends(id);
+  const { id: loginId } = await params;
+  const friendships = await getFriends(loginId);
   const friends = friendships.map((friendship) =>
-    friendship.initiator.login_id === id
+    friendship.initiator.login_id === loginId
       ? friendship.recipient
       : friendship.initiator
   );

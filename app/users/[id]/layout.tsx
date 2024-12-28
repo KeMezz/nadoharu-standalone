@@ -23,8 +23,8 @@ export default async function UserLayout({
   children: React.ReactNode;
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const user = await getUser(id);
+  const { id: loginId } = await params;
+  const user = await getUser(loginId);
   if (!user) {
     return notFound();
   }
