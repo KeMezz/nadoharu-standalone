@@ -8,7 +8,7 @@ import Footer from "@/components/layouts/footer";
 import Header from "@/components/layouts/header";
 import { TABS } from "@/libs/constants";
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function TabsLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   return (
     <main className="max-w-2xl mx-auto">

@@ -44,7 +44,7 @@ async function getIsUserPost(postUserId: number) {
 export default async function PostDetail({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const postId = Number(id);

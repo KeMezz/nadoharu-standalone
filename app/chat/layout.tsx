@@ -2,10 +2,10 @@ import Header from "@/components/layouts/header";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default async function Layout({ children }: LayoutProps) {
+export default async function ChatLayout({ children }: LayoutProps) {
   return (
     <main className="max-w-2xl mx-auto">
       <Header canGoBack />

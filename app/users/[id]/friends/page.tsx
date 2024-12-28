@@ -32,7 +32,11 @@ async function getFriends(loginId: string) {
   return friends;
 }
 
-export default async function Friends({ params }: { params: { id: string } }) {
+export default async function Friends({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const friendships = await getFriends(id);
   const friends = friendships.map((friendship) =>
