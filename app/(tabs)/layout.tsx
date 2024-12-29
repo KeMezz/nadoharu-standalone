@@ -29,7 +29,7 @@ export default function TabsLayout({ children }: { children: ReactNode }) {
           </Link>
         )}
       </Header>
-      <section className={"mt-14 mb-20"}>{children}</section>
+      <section className={"mt-14 mb-24"}>{children}</section>
       <Footer />
     </main>
   );

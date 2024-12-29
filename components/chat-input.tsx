@@ -9,7 +9,7 @@ export default function ChatInput({
   ...attrs
 }: ChatInputProps & InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="fixed bottom-0 p-4 w-full max-w-2xl mx-auto">
+    <div className="fixed bottom-4 p-4 w-full max-w-2xl mx-auto">
       <div className="relative">
         <input
           type="text"
