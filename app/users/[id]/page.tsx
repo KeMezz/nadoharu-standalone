@@ -13,16 +13,21 @@ async function getUser(userLoginId: string) {
       login_id: true,
       bio: true,
       avatar: true,
-      _count: {
-        select: {
-          friends: true,
-          friendOf: true,
-        },
-      },
     },
   });
 
   return user;
+}
+
+async function getFriendsCount(userId: number) {
+  const friendsCount = await db.friendship.count({
+    where: {
+      OR: [{ initiatorId: userId }, { recipientId: userId }],
+      status: 1,
+    },
+  });
+
+  return friendsCount;
 }
 
 async function getPosts(userLoginId: string) {
@@ -115,6 +120,27 @@ async function getIsFriend(userId: number, sessionId: number) {
           recipientId: userId,
         },
       ],
+      status: 1,
+    },
+  });
+
+  return Boolean(isFriend);
+}
+
+async function getIsPending(userId: number, sessionId: number) {
+  const isFriend = await db.friendship.findFirst({
+    where: {
+      OR: [
+        {
+          initiatorId: userId,
+          recipientId: sessionId,
+        },
+        {
+          initiatorId: sessionId,
+          recipientId: userId,
+        },
+      ],
+      status: 2,
     },
   });
 
@@ -135,13 +161,21 @@ export default async function Users({
   const session = await getSession();
   const isMe = user.id === session?.id;
   const isFriend = await getIsFriend(user.id, session.id!);
+  const isPending = await getIsPending(user.id, session.id!);
+  const friendsCount = await getFriendsCount(user.id);
 
   const posts = await getPosts(loginId);
   const reposts = await getReposts(loginId);
 
   return (
     <>
-      <UserInfo isMe={isMe} profile={user} isFriend={isFriend} />
+      <UserInfo
+        isMe={isMe}
+        profile={user}
+        isFriend={isFriend}
+        isPending={isPending}
+        friendsCount={friendsCount}
+      />
       <UserTimeline posts={posts} reposts={reposts} userId={user.id} />
     </>
   );

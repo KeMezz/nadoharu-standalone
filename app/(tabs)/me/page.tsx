@@ -19,16 +19,21 @@ async function getUser(userId: number) {
       login_id: true,
       avatar: true,
       bio: true,
-      _count: {
-        select: {
-          friends: true,
-          friendOf: true,
-        },
-      },
     },
   });
 
   return user;
+}
+
+async function getFriendsCount(userId: number) {
+  const friendsCount = await db.friendship.count({
+    where: {
+      OR: [{ initiatorId: userId }, { recipientId: userId }],
+      status: 1,
+    },
+  });
+
+  return friendsCount;
 }
 
 async function getPosts(userId: number) {
@@ -113,10 +118,11 @@ export default async function Me() {
   }
   const posts = await getPosts(session.id);
   const reposts = await getReposts(session.id);
+  const friendsCount = await getFriendsCount(session.id);
 
   return (
     <>
-      <UserInfo isMe={true} profile={user} />
+      <UserInfo isMe={true} profile={user} friendsCount={friendsCount} />
       <UserTimeline posts={posts} reposts={reposts} userId={session.id!} />
     </>
   );
