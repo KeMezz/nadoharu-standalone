@@ -8,7 +8,7 @@ async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
     where: {
       recipientId: userId,
-      // status: 2,
+      status: 2,
     },
     include: {
       initiator: {
@@ -54,12 +54,18 @@ export default async function Requested() {
               </span>
             </div>
           </div>
-          <div>{request.text ?? "우리 친구해요!"}</div>
-          <div className="flex items-center gap-2">
-            <button className="w-1/2 rounded-md bg-neutral-600 hover:bg-neutral-400 p-2">
+          {request.text === "" ? (
+            <p className="text-sm text-neutral-500">
+              친구 신청 메시지가 없습니다
+            </p>
+          ) : (
+            <p className="text-sm">{request.text}</p>
+          )}
+          <div className="flex items-center gap-2 mt-2">
+            <button className="w-1/2 rounded-md bg-neutral-600 hover:bg-neutral-400 p-2 text-sm">
               삭제
             </button>
-            <button className="w-1/2 rounded-md bg-violet-600 p-2 text-white hover:bg-violet-700">
+            <button className="w-1/2 rounded-md bg-violet-600 p-2 text-white hover:bg-violet-700 text-sm">
               친구하기
             </button>
           </div>
