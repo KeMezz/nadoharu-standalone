@@ -4,7 +4,7 @@ import Textarea from "@/components/inputs/textarea";
 export default async function SendRequest({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id: loginId } = await params;
   return (

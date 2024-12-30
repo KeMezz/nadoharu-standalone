@@ -16,15 +16,15 @@ async function getUser(userLoginId: string) {
   return user;
 }
 
-export default async function Layout({
+export default async function UserLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const user = await getUser(id);
+  const { id: loginId } = await params;
+  const user = await getUser(loginId);
   if (!user) {
     return notFound();
   }

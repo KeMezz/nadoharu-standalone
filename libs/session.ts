@@ -10,5 +10,8 @@ export default async function getSession() {
   return getIronSession<SessionContent>(nextCookies, {
     cookieName: "nadoharu",
     password: process.env.COOKIE_PASSWORD!,
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
   });
 }

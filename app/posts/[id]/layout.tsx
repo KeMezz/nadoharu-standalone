@@ -6,7 +6,7 @@ import PostDetailMoreBtns from "@/components/buttons/post-detail-more-buttons";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 async function getIsUserPost(postId: number) {
@@ -39,7 +39,7 @@ async function getPostUser(postId: number) {
   return user;
 }
 
-export default async function Layout({ children, params }: LayoutProps) {
+export default async function PostLayout({ children, params }: LayoutProps) {
   const { id } = await params;
   const postId = Number(id);
   if (isNaN(postId)) {
