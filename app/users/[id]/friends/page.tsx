@@ -1,5 +1,6 @@
 import db from "@/libs/db";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getFriends(loginId: string) {
   const friends = await db.friendship.findMany({
@@ -47,23 +48,27 @@ export default async function Friends({
   return (
     <section className="flex flex-col gap-4 p-4">
       {friends.map((friend) => (
-        <div key={friend.id} className="flex items-center gap-4">
+        <Link
+          key={friend.id}
+          href={`/users/${friend.login_id}`}
+          className="flex items-center gap-4"
+        >
           {friend.avatar ? (
             <Image
               src={friend.avatar}
               alt={friend.username}
-              width={48}
-              height={48}
-              className="rounded-full"
+              width={40}
+              height={40}
+              className="size-10 rounded-md"
             />
           ) : (
             <div className="w-12 h-12 rounded-full bg-neutral-300" />
           )}
           <div className="flex flex-col">
-            <span className="font-medium">{friend.username}</span>
+            <span className="font-medium text-sm">{friend.username}</span>
             <span className="text-xs text-neutral-500">@{friend.login_id}</span>
           </div>
-        </div>
+        </Link>
       ))}
     </section>
   );
