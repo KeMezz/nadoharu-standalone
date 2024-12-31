@@ -3,6 +3,7 @@
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import Image from "next/image";
+import ReceiveRequestForm from "@/components/forms/receive-request-form";
 
 async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
@@ -28,6 +29,7 @@ async function getFriendRequests(userId: number) {
 export default async function Requested() {
   const session = await getSession();
   const requests = await getFriendRequests(session.id!);
+
   return (
     <section className="flex flex-col gap-4 p-4">
       {requests.map((request) => (
@@ -61,14 +63,7 @@ export default async function Requested() {
           ) : (
             <p className="text-sm">{request.text}</p>
           )}
-          <div className="flex items-center gap-2 mt-2">
-            <button className="w-1/2 rounded-md bg-neutral-600 hover:bg-neutral-400 p-2 text-sm">
-              삭제
-            </button>
-            <button className="w-1/2 rounded-md bg-violet-600 p-2 text-white hover:bg-violet-700 text-sm">
-              친구하기
-            </button>
-          </div>
+          <ReceiveRequestForm {...request} />
         </div>
       ))}
     </section>
