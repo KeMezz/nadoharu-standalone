@@ -56,9 +56,20 @@ export async function sendFriendRequest(
     }
 
     if (session.id) {
-      await db.friendship.create({
-        data: {
+      await db.friendship.upsert({
+        where: {
+          initiatorId_recipientId: {
+            initiatorId: session.id,
+            recipientId: recipient.id,
+          },
+        },
+        update: {
           text: result.data.text,
+          status: 2,
+        },
+        create: {
+          text: result.data.text,
+          status: 2,
           initiator: {
             connect: {
               id: session.id,
