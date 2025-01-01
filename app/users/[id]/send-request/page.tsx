@@ -49,7 +49,7 @@ export default async function SendRequest({
 
   const isFriend = await getIsFriend(session.id, recipient.id);
   if (isFriend) {
-    return redirect(`/users/${loginId}`);
+    return redirect("/me");
   }
 
   return <SendRequestForm username={recipient.username} loginId={loginId} />;
