@@ -4,6 +4,7 @@ import db from "@/libs/db";
 import getSession from "@/libs/session";
 import Image from "next/image";
 import ReceiveRequestForm from "@/components/forms/receive-request-form";
+import Link from "next/link";
 
 async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
@@ -37,7 +38,10 @@ export default async function Requested() {
           key={request.id}
           className="flex flex-col gap-4 p-4 bg-neutral-800 shadow-md rounded-md"
         >
-          <div className="flex items-center gap-4">
+          <Link
+            href={`/users/${request.initiator.login_id}`}
+            className="flex items-center gap-4"
+          >
             {request.initiator.avatar ? (
               <Image
                 src={request.initiator.avatar}
@@ -55,7 +59,7 @@ export default async function Requested() {
                 @{request.initiator.login_id}
               </span>
             </div>
-          </div>
+          </Link>
           {request.text === "" ? (
             <p className="text-sm text-neutral-500">
               친구 신청 메시지가 없습니다
