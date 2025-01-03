@@ -10,6 +10,7 @@ interface UserTemplateProps {
   isFriend?: boolean;
   isPending?: boolean;
   isPended?: boolean;
+  pendedCount?: number;
   profile: {
     id: number;
     username: string;
@@ -25,6 +26,7 @@ export default function UserInfo({
   isFriend,
   isPending,
   isPended,
+  pendedCount,
   profile,
   friendsCount,
 }: UserTemplateProps) {
@@ -35,10 +37,15 @@ export default function UserInfo({
           <div className="absolute right-4 top-4 flex gap-2">
             <Link
               href={`/users/${profile.login_id}/friends`}
-              className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
+              className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1 relative"
             >
+              {pendedCount ? (
+                <div className="flex items-center justify-center size-4 bg-red-600 rounded-full absolute -top-2 -right-2">
+                  <span className="text-xs text-white">{pendedCount}</span>
+                </div>
+              ) : null}
               <UsersIcon className="size-4" />
-              친구 ({friendsCount})
+              친구 목록 ({friendsCount})
             </Link>
             {isMe ? (
               <Link

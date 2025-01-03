@@ -107,6 +107,17 @@ async function getReposts(userId: number) {
   return reposts;
 }
 
+async function getPendedCount(sessionId: number) {
+  const pendedCount = await db.friendship.count({
+    where: {
+      recipientId: sessionId,
+      status: 2,
+    },
+  });
+
+  return pendedCount;
+}
+
 export default async function Me() {
   const session = await getSession();
   if (!session.id) {
@@ -119,10 +130,15 @@ export default async function Me() {
   const posts = await getPosts(session.id);
   const reposts = await getReposts(session.id);
   const friendsCount = await getFriendsCount(session.id);
-
+  const pendedCount = await getPendedCount(session.id);
   return (
     <>
-      <UserInfo isMe={true} profile={user} friendsCount={friendsCount} />
+      <UserInfo
+        isMe={true}
+        profile={user}
+        friendsCount={friendsCount}
+        pendedCount={pendedCount}
+      />
       <UserTimeline posts={posts} reposts={reposts} userId={session.id!} />
     </>
   );
