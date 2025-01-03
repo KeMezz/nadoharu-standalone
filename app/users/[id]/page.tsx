@@ -127,19 +127,23 @@ async function getIsFriend(userId: number, sessionId: number) {
   return Boolean(isFriend);
 }
 
+async function getIsPended(userId: number, sessionId: number) {
+  const isFriend = await db.friendship.findFirst({
+    where: {
+      initiatorId: userId,
+      recipientId: sessionId,
+      status: 2,
+    },
+  });
+
+  return Boolean(isFriend);
+}
+
 async function getIsPending(userId: number, sessionId: number) {
   const isFriend = await db.friendship.findFirst({
     where: {
-      OR: [
-        {
-          initiatorId: userId,
-          recipientId: sessionId,
-        },
-        {
-          initiatorId: sessionId,
-          recipientId: userId,
-        },
-      ],
+      initiatorId: sessionId,
+      recipientId: userId,
       status: 2,
     },
   });
@@ -162,6 +166,7 @@ export default async function Users({
   const isMe = user.id === session?.id;
   const isFriend = await getIsFriend(user.id, session.id!);
   const isPending = await getIsPending(user.id, session.id!);
+  const isPended = await getIsPended(user.id, session.id!);
   const friendsCount = await getFriendsCount(user.id);
 
   const posts = await getPosts(loginId);
@@ -174,6 +179,7 @@ export default async function Users({
         profile={user}
         isFriend={isFriend}
         isPending={isPending}
+        isPended={isPended}
         friendsCount={friendsCount}
       />
       <UserTimeline posts={posts} reposts={reposts} userId={user.id} />

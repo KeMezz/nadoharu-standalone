@@ -9,6 +9,7 @@ interface UserTemplateProps {
   isMe?: boolean;
   isFriend?: boolean;
   isPending?: boolean;
+  isPended?: boolean;
   profile: {
     id: number;
     username: string;
@@ -23,6 +24,7 @@ export default function UserInfo({
   isMe,
   isFriend,
   isPending,
+  isPended,
   profile,
   friendsCount,
 }: UserTemplateProps) {
@@ -36,7 +38,7 @@ export default function UserInfo({
               className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
             >
               <UsersIcon className="size-4" />
-              친구 목록 ({friendsCount})
+              친구 ({friendsCount})
             </Link>
             {isMe ? (
               <Link
@@ -47,7 +49,7 @@ export default function UserInfo({
                 설정
               </Link>
             ) : null}
-            {!isMe && !isFriend && !isPending ? (
+            {!isMe && !isFriend && !isPending && !isPended ? (
               <Link
                 href={`/users/${profile.login_id}/send-request`}
                 className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
@@ -84,6 +86,11 @@ export default function UserInfo({
               {isMe ? (
                 <span className="text-xs font-bold bg-neutral-200 dark:bg-neutral-600 px-2 py-1 rounded-md text-neutral-600 dark:text-neutral-200">
                   내 프로필
+                </span>
+              ) : null}
+              {isPended ? (
+                <span className="text-xs font-bold bg-neutral-200 dark:bg-neutral-600 px-2 py-1 rounded-md text-neutral-600 dark:text-neutral-200">
+                  친구 요청 받음
                 </span>
               ) : null}
             </div>
