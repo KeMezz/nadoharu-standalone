@@ -8,25 +8,28 @@ import Image from "next/image";
 interface UserTemplateProps {
   isMe?: boolean;
   isFriend?: boolean;
+  isPending?: boolean;
+  isPended?: boolean;
+  pendedCount?: number;
   profile: {
     id: number;
     username: string;
     login_id: string;
     bio: string | null;
     avatar: string | null;
-    _count: {
-      friends: number;
-      friendOf: number;
-    };
   };
+  friendsCount: number;
 }
 
 export default function UserInfo({
   isMe,
   isFriend,
+  isPending,
+  isPended,
+  pendedCount,
   profile,
+  friendsCount,
 }: UserTemplateProps) {
-  const friendsCount = profile._count.friends + profile._count.friendOf;
   return (
     <section>
       <div className="h-56 bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">
@@ -34,8 +37,13 @@ export default function UserInfo({
           <div className="absolute right-4 top-4 flex gap-2">
             <Link
               href={`/users/${profile.login_id}/friends`}
-              className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
+              className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1 relative"
             >
+              {pendedCount ? (
+                <div className="flex items-center justify-center size-4 bg-red-600 rounded-full absolute -top-2 -right-2">
+                  <span className="text-xs text-white">{pendedCount}</span>
+                </div>
+              ) : null}
               <UsersIcon className="size-4" />
               친구 목록 ({friendsCount})
             </Link>
@@ -48,7 +56,7 @@ export default function UserInfo({
                 설정
               </Link>
             ) : null}
-            {!isMe && !isFriend ? (
+            {!isMe && !isFriend && !isPending && !isPended ? (
               <Link
                 href={`/users/${profile.login_id}/send-request`}
                 className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
@@ -70,12 +78,34 @@ export default function UserInfo({
             <div className="w-12 h-12 bg-neutral-300 dark:bg-neutral-500 rounded-md" />
           )}
           <div className="flex flex-col">
-            <h5 className="font-semibold">{profile?.username}</h5>
+            <div className="flex items-center gap-3">
+              <h5 className="font-semibold">{profile?.username}</h5>
+              {isFriend ? (
+                <span className="text-xs font-bold bg-violet-600 px-2 py-1 rounded-md text-neutral-200">
+                  친구
+                </span>
+              ) : null}
+              {isPending ? (
+                <span className="text-xs font-bold bg-neutral-200 dark:bg-neutral-600 px-2 py-1 rounded-md text-neutral-600 dark:text-neutral-200">
+                  친구 요청 보냄
+                </span>
+              ) : null}
+              {isMe ? (
+                <span className="text-xs font-bold bg-neutral-200 dark:bg-neutral-600 px-2 py-1 rounded-md text-neutral-600 dark:text-neutral-200">
+                  내 프로필
+                </span>
+              ) : null}
+              {isPended ? (
+                <span className="text-xs font-bold bg-neutral-200 dark:bg-neutral-600 px-2 py-1 rounded-md text-neutral-600 dark:text-neutral-200">
+                  친구 요청 받음
+                </span>
+              ) : null}
+            </div>
             <p className="text-gray-400 text-sm">@{profile?.login_id}</p>
           </div>
         </div>
         {profile?.bio ? (
-          <p className="text-xs text-slate-600">{profile?.bio}</p>
+          <p className="text-xs text-neutral-600">{profile?.bio}</p>
         ) : null}
       </div>
     </section>

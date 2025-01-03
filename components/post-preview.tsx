@@ -5,6 +5,7 @@ import { PostWithUser } from "./timeline";
 import { formatRelativeTime } from "@/libs/utils";
 import Image from "next/image";
 import PostPreviewButtons from "./buttons/post-preview-buttons";
+import { useRouter } from "next/navigation";
 
 interface PostPreviewProps {
   post: PostWithUser;
@@ -15,15 +16,22 @@ export default function PostPreview({
   post: { id, user, content, tags, created_at, _count, reposts },
   userId,
 }: PostPreviewProps) {
+  const router = useRouter();
   const isUserPost = Number(user.id) === userId;
   const isUserReposted = reposts.some((repost) => repost?.id);
+
+  const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    router.push(`/users/${user.login_id}`);
+  };
 
   return (
     <Link href={`/posts/${id}`}>
       <div className="w-full p-4 text-left flex flex-col gap-3">
         {/* 프로필 */}
         <section className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <button onClick={goToUserPage} className="flex items-center gap-3">
             <Image
               src={user.avatar ?? ""}
               alt={user.username}
@@ -34,7 +42,7 @@ export default function PostPreview({
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{user.username}</h2>
             </div>
-          </div>
+          </button>
           <p className="text-sm text-neutral-400">
             {formatRelativeTime(created_at)}
           </p>

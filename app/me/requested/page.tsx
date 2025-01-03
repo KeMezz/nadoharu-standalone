@@ -3,12 +3,14 @@
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import Image from "next/image";
+import ReceiveRequestForm from "@/components/forms/receive-request-form";
+import Link from "next/link";
 
 async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
     where: {
       recipientId: userId,
-      // status: 2,
+      status: 2,
     },
     include: {
       initiator: {
@@ -28,21 +30,25 @@ async function getFriendRequests(userId: number) {
 export default async function Requested() {
   const session = await getSession();
   const requests = await getFriendRequests(session.id!);
+
   return (
     <section className="flex flex-col gap-4 p-4">
       {requests.map((request) => (
         <div
           key={request.id}
-          className="flex flex-col gap-4 p-4 bg-neutral-800 shadow-md rounded-md"
+          className="flex flex-col gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 shadow-md rounded-md"
         >
-          <div className="flex items-center gap-4">
+          <Link
+            href={`/users/${request.initiator.login_id}`}
+            className="flex items-center gap-4"
+          >
             {request.initiator.avatar ? (
               <Image
                 src={request.initiator.avatar}
                 alt={request.initiator.username}
                 width={48}
                 height={48}
-                className="rounded-full"
+                className="size-12 rounded-md"
               />
             ) : (
               <div className="w-12 h-12 rounded-full bg-neutral-300" />
@@ -53,16 +59,15 @@ export default async function Requested() {
                 @{request.initiator.login_id}
               </span>
             </div>
-          </div>
-          <div>{request.text ?? "우리 친구해요!"}</div>
-          <div className="flex items-center gap-2">
-            <button className="w-1/2 rounded-md bg-neutral-600 hover:bg-neutral-400 p-2">
-              삭제
-            </button>
-            <button className="w-1/2 rounded-md bg-violet-600 p-2 text-white hover:bg-violet-700">
-              친구하기
-            </button>
-          </div>
+          </Link>
+          {request.text === "" ? (
+            <p className="text-sm text-neutral-500">
+              친구 신청 메시지가 없습니다
+            </p>
+          ) : (
+            <p className="text-sm">{request.text}</p>
+          )}
+          <ReceiveRequestForm {...request} />
         </div>
       ))}
     </section>

@@ -20,7 +20,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
   const buttonColor = (color: "violet" | "red" | "gray") => {
     switch (color) {
       case "violet":
-        return "bg-violet-400 focus:ring-violet-600 text-white";
+        return "bg-violet-400 dark:bg-violet-600 focus:ring-violet-600 text-white";
       case "red":
         return "bg-rose-600 focus:ring-rose-700 text-white";
       case "gray":

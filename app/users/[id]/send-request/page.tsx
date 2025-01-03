@@ -1,5 +1,35 @@
-import SubmitButton from "@/components/buttons/submit-button";
-import Textarea from "@/components/inputs/textarea";
+import db from "@/libs/db";
+import getSession from "@/libs/session";
+import { notFound, redirect } from "next/navigation";
+import SendRequestForm from "@/components/forms/send-request-form";
+
+async function getRecipient(loginId: string) {
+  const recipient = await db.user.findUnique({
+    where: {
+      login_id: loginId,
+    },
+    select: {
+      id: true,
+      username: true,
+    },
+  });
+
+  return recipient;
+}
+
+async function getIsFriend(userId: number, recipientId: number) {
+  const isFriend = await db.friendship.findFirst({
+    where: {
+      OR: [
+        { initiatorId: userId, recipientId: recipientId },
+        { initiatorId: recipientId, recipientId: userId },
+      ],
+      status: { in: [1, 2] },
+    },
+  });
+
+  return isFriend;
+}
 
 export default async function SendRequest({
   params,
@@ -7,10 +37,20 @@ export default async function SendRequest({
   params: Promise<{ id: string }>;
 }) {
   const { id: loginId } = await params;
-  return (
-    <form className="flex flex-col gap-4 p-4">
-      <Textarea placeholder={`@${loginId} 님! 우리 친구해요!`} />
-      <SubmitButton text="친구 신청 보내기" />
-    </form>
-  );
+  const recipient = await getRecipient(loginId);
+  if (!recipient) {
+    return notFound();
+  }
+
+  const session = await getSession();
+  if (!session.id) {
+    return redirect("/login");
+  }
+
+  const isFriend = await getIsFriend(session.id, recipient.id);
+  if (isFriend) {
+    return redirect("/me");
+  }
+
+  return <SendRequestForm username={recipient.username} loginId={loginId} />;
 }

@@ -6,6 +6,7 @@ import { formatRelativeTime } from "@/libs/utils";
 import Image from "next/image";
 import PostPreviewButtons from "./buttons/post-preview-buttons";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 interface RepostPreviewProps {
   repost: RepostWithUser;
@@ -27,8 +28,14 @@ export default function RepostPreview({
   },
   userId,
 }: RepostPreviewProps) {
+  const router = useRouter();
   const isUserPost = Number(postUser.id) === userId;
   const isUserReposted = reposts.some((repost) => repost?.id);
+  const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    router.push(`/users/${postUser.login_id}`);
+  };
 
   return (
     <Link href={`/posts/${postId}`}>
@@ -39,7 +46,7 @@ export default function RepostPreview({
         </div>
         {/* 프로필 */}
         <section className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <button onClick={goToUserPage} className="flex items-center gap-3">
             <Image
               src={postUser.avatar ?? ""}
               alt={postUser.username}
@@ -50,7 +57,7 @@ export default function RepostPreview({
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{postUser.username}</h2>
             </div>
-          </div>
+          </button>
           <p className="text-sm text-neutral-400">
             {formatRelativeTime(postCreatedAt)}
           </p>
