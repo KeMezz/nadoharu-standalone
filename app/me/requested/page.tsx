@@ -44,7 +44,7 @@ export default async function Requested() {
                 alt={request.initiator.username}
                 width={48}
                 height={48}
-                className="rounded-full"
+                className="size-12 rounded-md"
               />
             ) : (
               <div className="w-12 h-12 rounded-full bg-neutral-300" />
