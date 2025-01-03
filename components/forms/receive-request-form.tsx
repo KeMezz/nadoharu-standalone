@@ -49,13 +49,13 @@ export default function ReceiveRequestForm({
     <div className="flex items-center gap-2 mt-2">
       <button
         onClick={onDeleteClick}
-        className="w-1/2 rounded-md bg-neutral-600 hover:bg-neutral-400 p-2 text-sm"
+        className="w-1/2 rounded-md bg-neutral-200 dark:bg-neutral-600 hover:bg-neutral-400 p-2 text-sm"
       >
         삭제
       </button>
       <button
         onClick={onAcceptClick}
-        className="w-1/2 rounded-md bg-violet-600 p-2 text-white hover:bg-violet-700 text-sm"
+        className="w-1/2 rounded-md bg-violet-500 dark:bg-violet-600 p-2 text-white hover:bg-violet-700 text-sm"
       >
         친구하기
       </button>

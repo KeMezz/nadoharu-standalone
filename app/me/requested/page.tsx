@@ -36,7 +36,7 @@ export default async function Requested() {
       {requests.map((request) => (
         <div
           key={request.id}
-          className="flex flex-col gap-4 p-4 bg-neutral-800 shadow-md rounded-md"
+          className="flex flex-col gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 shadow-md rounded-md"
         >
           <Link
             href={`/users/${request.initiator.login_id}`}
