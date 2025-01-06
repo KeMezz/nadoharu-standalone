@@ -49,7 +49,7 @@ export default function UserInfo({
             </Link>
             {isMe ? (
               <Link
-                href="/me/edit"
+                href="/me/setting"
                 className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
               >
                 <Cog6ToothIcon className="size-4" />
