@@ -1,3 +1,4 @@
+import ProfileImage from "@/components/profile-image";
 import Link from "next/link";
 
 export default function Chats() {
@@ -9,7 +10,7 @@ export default function Chats() {
           key={index}
           className="flex items-center gap-3 p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800"
         >
-          <div className="size-10 bg-neutral-200 rounded-full" />
+          <ProfileImage avatar={null} username="test" size={10} />
           <div className="flex flex-col">
             <p className="text-sm font-bold">John Doe</p>
             <p className="text-sm text-neutral-500">Last message</p>
