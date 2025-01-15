@@ -1,29 +1,21 @@
-import Image from "next/image";
+import ProfileImage from "./profile-image";
 
 interface BubbleProps {
   message: string;
-  avatar?: string;
+  avatar: string | null;
   reversed?: boolean;
+  username: string;
 }
 
-const ProfileAvatar = ({ avatar }: { avatar?: string }) => {
-  if (avatar)
-    return (
-      <Image
-        width={40}
-        height={40}
-        className="w-10 h-10 rounded-md bg-neutral-300"
-        src={`https://imagedelivery.net/bNh-NL16qgpnc_aca1vxPw/${avatar}/avatar`}
-        alt="avatar"
-      />
-    );
-  return <div className="size-10 rounded-lg bg-neutral-300" />;
-};
-
-export default function ChatBubble({ message, reversed, avatar }: BubbleProps) {
+export default function ChatBubble({
+  message,
+  reversed,
+  avatar,
+  username,
+}: BubbleProps) {
   return (
     <div className={`flex gap-3 ${reversed ? "justify-end" : "justify-start"}`}>
-      {!reversed ? <ProfileAvatar avatar={avatar} /> : null}
+      {!reversed ? <ProfileImage avatar={avatar} username={username} /> : null}
       <div
         className={`flex items-center p-3 rounded-lg max-w-[70%] ${
           reversed ? "bg-violet-500" : "bg-neutral-800"

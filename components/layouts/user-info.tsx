@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { UserPlusIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
+import ProfileImage from "../profile-image";
 
 interface UserTemplateProps {
   isMe?: boolean;
@@ -66,17 +66,7 @@ export default function UserInfo({
               </Link>
             ) : null}
           </div>
-          {profile?.avatar ? (
-            <Image
-              src={profile.avatar}
-              alt="avatar"
-              width={48}
-              height={48}
-              className="size-12 rounded-md object-cover"
-            />
-          ) : (
-            <div className="w-12 h-12 bg-neutral-300 dark:bg-neutral-500 rounded-md" />
-          )}
+          <ProfileImage avatar={profile.avatar} username={profile.username} />
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
               <h5 className="font-semibold">{profile?.username}</h5>
