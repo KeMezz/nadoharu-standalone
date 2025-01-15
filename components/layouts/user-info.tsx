@@ -66,7 +66,11 @@ export default function UserInfo({
               </Link>
             ) : null}
           </div>
-          <ProfileImage avatar={profile.avatar} username={profile.username} />
+          <ProfileImage
+            avatar={profile.avatar}
+            username={profile.username}
+            size={12}
+          />
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
               <h5 className="font-semibold">{profile?.username}</h5>

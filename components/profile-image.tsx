@@ -9,12 +9,15 @@ export default function ProfileImage({
   username: string;
   size?: number;
 }) {
+  const width = size * 4;
+  const height = size * 4;
+
   return avatar ? (
     <Image
       src={avatar}
       alt={username}
-      width={40}
-      height={40}
+      width={width}
+      height={height}
       className={`size-${size} rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm`}
     />
   ) : (
