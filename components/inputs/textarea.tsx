@@ -15,9 +15,7 @@ function Textarea({
         className="w-full px-4 py-2 border rounded-md shadow-sm outline-none resize-none border-neutral-300 focus:ring-2 focus:ring-violet-600 focus:border-violet-600 dark:bg-neutral-700 dark:text-white"
         rows={3}
         {...attrs}
-      >
-        {attrs.value ?? ""}
-      </textarea>
+      />
       {errors?.length ? (
         <div className="flex flex-col gap-2">
           {errors.map((error, i) => (
