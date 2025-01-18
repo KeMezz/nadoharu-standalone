@@ -11,10 +11,12 @@ export default function ProfileImage({
 }) {
   const width = size * 4;
   const height = size * 4;
+  const imageUrl =
+    avatar && avatar.startsWith("blob") ? avatar : avatar + "/avatar";
 
   return avatar ? (
     <Image
-      src={avatar}
+      src={imageUrl}
       alt={username}
       width={width}
       height={height}

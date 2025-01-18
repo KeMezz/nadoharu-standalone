@@ -32,3 +32,7 @@ export function formatRelativeTime(targetDate: Date): string {
     return "방금";
   }
 }
+
+export function getImageUrl(imageId: string) {
+  return `https://imagedelivery.net/bNh-NL16qgpnc_aca1vxPw/${imageId}`;
+}

@@ -2,9 +2,17 @@
 
 import { PencilIcon } from "@heroicons/react/24/solid";
 import ProfileImage from "../profile-image";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Textarea from "../inputs/textarea";
-import { useForm } from "react-hook-form";
+import {
+  getUploadUrl,
+  updateProfile,
+  UpdateProfileForm,
+} from "@/app/me/setting/action";
+import { useSetAtom } from "jotai";
+import { alertAtom } from "@/libs/atoms";
+import { ActionPrevState } from "@/types/form";
+import { getImageUrl } from "@/libs/utils";
 
 interface EditProfileFormProps {
   username: string;
@@ -13,35 +21,91 @@ interface EditProfileFormProps {
   bio: string | null;
 }
 
-interface EditProfileFormData {
-  bio: string;
-  avatar: File | null;
-}
-
 export default function EditProfileForm({
   username,
   avatar,
   login_id,
   bio,
 }: EditProfileFormProps) {
-  const { register, handleSubmit } = useForm<EditProfileFormData>({
-    defaultValues: { bio: bio ?? "" },
-  });
-
+  const setAlert = useSetAtom(alertAtom);
   const [preview, setPreview] = useState<string | null>(avatar);
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [uploadUrl, setUploadUrl] = useState("");
+  const [imageId, setImageId] = useState("");
+
+  const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setPreview(URL.createObjectURL(file));
+    if (!file) return;
+    if (file.size > 1024 * 1024 * 2) {
+      setAlert({
+        visible: true,
+        title: "너무 커요!",
+        description: "2MB 이하의 이미지만 업로드 가능합니다.",
+      });
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setAlert({
+        visible: true,
+        title: "멋진 파일이네요!",
+        description: "이미지 파일만 업로드 가능합니다.",
+      });
+      return;
+    }
+
+    setPreview(URL.createObjectURL(file));
+
+    const { success, result } = await getUploadUrl();
+    if (success) {
+      const { id, uploadURL } = result;
+      setImageId(id);
+      setUploadUrl(uploadURL);
     }
   };
 
-  const onSubmit = (data: EditProfileFormData) => {
-    console.log(data);
+  const uploadImage = async (image: FormDataEntryValue | null) => {
+    if (!image) return "";
+
+    const cloudflareFormData = new FormData();
+    cloudflareFormData.append("file", image);
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      body: cloudflareFormData,
+    });
+    if (response.status !== 200) {
+      throw new Error(
+        "이미지 저장소에 문제가 있는 것 같아요. 잠시 후에 다시 시도해주세요."
+      );
+    }
   };
 
+  const updateProfileWrapper = async (
+    state: ActionPrevState<UpdateProfileForm>,
+    formData: FormData
+  ) => {
+    try {
+      const file = formData.get("avatar");
+      if (file && typeof file === "object" && file.size > 0) {
+        await uploadImage(file);
+        const imageUrl = getImageUrl(imageId);
+        formData.set("avatar", imageUrl);
+      } else {
+        formData.set("avatar", "");
+      }
+
+      return updateProfile(state, formData);
+    } catch (e) {
+      setAlert({
+        visible: true,
+        title: "죄송해요!",
+        description: (e as Error).message,
+      });
+    }
+  };
+
+  const [state, action] = useActionState(updateProfileWrapper, null);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form action={action}>
       <div className="bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-4 relative">
         <div className="flex gap-5 items-center">
           <div className="size-20 rounded-md relative overflow-hidden">
@@ -53,8 +117,9 @@ export default function EditProfileForm({
               <input
                 type="file"
                 className="hidden"
+                accept="image/*"
                 id="avatar"
-                {...register("avatar")}
+                name="avatar"
                 onChange={onImageChange}
               />
             </label>
@@ -69,7 +134,9 @@ export default function EditProfileForm({
         </div>
         <Textarea
           placeholder="이곳에 화끈한 자기소개 입력.."
-          {...register("bio")}
+          name="bio"
+          defaultValue={bio ?? ""}
+          errors={state?.fieldErrors.bio}
         />
         <button className="mt-4 bg-violet-400 dark:bg-violet-600 focus:ring-violet-600 text-white w-full py-2 rounded-md outline-none focus:ring-2">
           프로필 업데이트

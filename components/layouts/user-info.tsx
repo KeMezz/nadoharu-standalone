@@ -32,8 +32,8 @@ export default function UserInfo({
 }: UserTemplateProps) {
   return (
     <section>
-      <div className="h-64 bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">
-        <div className="flex flex-col gap-3">
+      <div className="bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">
+        <div className="flex flex-col gap-3 mt-20">
           <div className="absolute right-4 top-4 flex gap-2">
             <Link
               href={`/users/${profile.login_id}/friends`}
@@ -99,7 +99,9 @@ export default function UserInfo({
           </div>
         </div>
         {profile?.bio ? (
-          <p className="text-xs text-neutral-600">{profile?.bio}</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            {profile?.bio}
+          </p>
         ) : null}
       </div>
     </section>
