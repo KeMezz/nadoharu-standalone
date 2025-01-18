@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
-import Image from "next/image";
+import ProfileImage from "../profile-image";
 
 interface HeaderProps {
   title?: string;
@@ -42,17 +42,7 @@ export default function Header({
             href={`/users/${profile.login_id}`}
             className="flex items-center gap-3"
           >
-            {profile.avatar ? (
-              <Image
-                src={profile.avatar}
-                alt={profile.username}
-                width={40}
-                height={40}
-                className="size-10 rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
-              />
-            ) : (
-              <div className="w-10 h-10 bg-neutral-300 rounded-md" />
-            )}
+            <ProfileImage avatar={profile.avatar} username={profile.username} />
             <div className="flex flex-col items-start">
               <h3 className="font-semibold text-sm">{profile.username}</h3>
               <p className="text-gray-400 text-xs">@{profile.login_id}</p>

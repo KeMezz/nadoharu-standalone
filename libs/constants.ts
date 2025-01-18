@@ -11,6 +11,7 @@ export const LOGIN_ID_REGEX = new RegExp(/^[a-zA-Z]*$/);
 export const POST_CONTENT_MAX_LENGTH = 150;
 export const POST_TAGS_MAX_LENGTH = 150;
 export const COMMENT_CONTENT_MAX_LENGTH = 1000;
+export const BIO_MAX_LENGTH = 200;
 
 // Error messages
 export const INVALID_TYPE_ERROR_MESSAGE = "유효하지 않은 형식입니다";
@@ -35,6 +36,7 @@ export const POST_CONTENT_MAX_ERROR_MESSAGE = `최대 150자의 글만 업로드
 export const POST_TAGS_MAX_ERROR_MESSAGE = `태그가 너무 길어요`;
 export const COMMENT_CONTENT_MAX_ERROR_MESSAGE = `최대 ${COMMENT_CONTENT_MAX_LENGTH}자의 댓글만 작성할 수 있어요`;
 export const COMMENT_CONTENT_REQUIRED_ERROR_MESSAGE = `댓글 내용을 입력해주세요`;
+export const BIO_MAX_ERROR_MESSAGE = `자기소개는 최대 ${BIO_MAX_LENGTH}자까지만 작성할 수 있어요`;
 
 // Friendship Status
 export const FRIEND_REJECTED = 0;
@@ -48,3 +50,5 @@ export const TABS = [
   { name: "나는", link: "/me" },
   { name: "친구들은", link: "/friends" },
 ];
+
+export const CF_DIRECT_UPLOAD_URL = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v2/direct_upload`;

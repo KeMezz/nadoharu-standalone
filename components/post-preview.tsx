@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { PostWithUser } from "./timeline";
 import { formatRelativeTime } from "@/libs/utils";
-import Image from "next/image";
 import PostPreviewButtons from "./buttons/post-preview-buttons";
 import { useRouter } from "next/navigation";
+import ProfileImage from "./profile-image";
 
 interface PostPreviewProps {
   post: PostWithUser;
@@ -32,13 +32,7 @@ export default function PostPreview({
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
-            <Image
-              src={user.avatar ?? ""}
-              alt={user.username}
-              width={40}
-              height={40}
-              className="size-10 rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm"
-            />
+            <ProfileImage avatar={user.avatar} username={user.username} />
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{user.username}</h2>
             </div>

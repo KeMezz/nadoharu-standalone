@@ -5,6 +5,7 @@ import getSession from "@/libs/session";
 import Image from "next/image";
 import ReceiveRequestForm from "@/components/forms/receive-request-form";
 import Link from "next/link";
+import ProfileImage from "@/components/profile-image";
 
 async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
@@ -42,17 +43,10 @@ export default async function Requested() {
             href={`/users/${request.initiator.login_id}`}
             className="flex items-center gap-4"
           >
-            {request.initiator.avatar ? (
-              <Image
-                src={request.initiator.avatar}
-                alt={request.initiator.username}
-                width={48}
-                height={48}
-                className="size-12 rounded-md"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-full bg-neutral-300" />
-            )}
+            <ProfileImage
+              avatar={request.initiator.avatar}
+              username={request.initiator.username}
+            />
             <div className="flex flex-col">
               <span className="font-medium">{request.initiator.username}</span>
               <span className="text-xs text-neutral-500">
