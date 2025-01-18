@@ -32,7 +32,7 @@ export default function UserInfo({
 }: UserTemplateProps) {
   return (
     <section>
-      <div className="h-56 bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">
+      <div className="h-64 bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">
         <div className="flex flex-col gap-3">
           <div className="absolute right-4 top-4 flex gap-2">
             <Link
@@ -69,7 +69,7 @@ export default function UserInfo({
           <ProfileImage
             avatar={profile.avatar}
             username={profile.username}
-            size={12}
+            size={20}
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
