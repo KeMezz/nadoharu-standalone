@@ -15,7 +15,6 @@ export default function LoginForm() {
         type="text"
         placeholder="아이디"
         required={true}
-        errors={state?.fieldErrors.login_id}
       />
       <TextInput
         name="password"
