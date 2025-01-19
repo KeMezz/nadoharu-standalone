@@ -34,5 +34,5 @@ export function formatRelativeTime(targetDate: Date): string {
 }
 
 export function getImageUrl(imageId: string) {
-  return `https://imagedelivery.net/bNh-NL16qgpnc_aca1vxPw/${imageId}`;
+  return `https://imagedelivery.net/${process.env.CF_ACCOUNT_HASH}/${imageId}`;
 }
