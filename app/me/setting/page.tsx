@@ -47,7 +47,7 @@ export default async function EditProfile() {
         bio={user.bio}
       />
       <form action={logout} className="p-4">
-        <button className="flex items-center justify-center gap-2 border-2 border-violet-400 dark:border-violet-600 focus:ring-violet-600 text-white w-full py-2 rounded-md outline-none focus:ring-2">
+        <button className="flex items-center justify-center gap-2 border-2 border-violet-400 dark:border-violet-600 focus:ring-violet-600 w-full py-2 rounded-md outline-none focus:ring-2">
           다른 계정으로 로그인
           <ArrowLeftStartOnRectangleIcon className="size-5" />
         </button>

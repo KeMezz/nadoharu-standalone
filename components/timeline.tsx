@@ -58,7 +58,7 @@ export default function Timeline({ posts, reposts, userId }: TimelineProps) {
           )
         )
       ) : (
-        <EmptyState text="당신은 친구도 없고 글도 없네요 호호" />
+        <EmptyState text="조금 허전한데요" />
       )}
     </section>
   );

@@ -79,7 +79,7 @@ export default function UserTimeline({
               )
             )
           ) : (
-            <EmptyState text="아직 글을 작성하지 않았나보네요!" />
+            <EmptyState text="아직 글을 작성하지 않았나보네요!" userInfo />
           )}
         </div>
       ) : null}
@@ -91,7 +91,7 @@ export default function UserTimeline({
               <RepostPreview key={post.post.id} repost={post} userId={userId} />
             ))
           ) : (
-            <EmptyState text="아직 공감한 글이 없어요!" />
+            <EmptyState text="아직 공감한 글이 없어요!" userInfo />
           )}
         </div>
       ) : null}
