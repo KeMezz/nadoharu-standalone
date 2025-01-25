@@ -7,7 +7,7 @@ import { useActionState } from "react";
 import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
 
 export default function LoginForm() {
-  const [state, action] = useActionState(login, null);
+  const [state, action, pending] = useActionState(login, null);
   return (
     <form action={action} className="flex flex-col gap-4 p-8">
       <TextInput
@@ -21,10 +21,13 @@ export default function LoginForm() {
         type="password"
         placeholder="비밀번호"
         required={true}
-        errors={state?.fieldErrors.password}
+        errors={[
+          ...(state?.fieldErrors?.login_id ?? []),
+          ...(state?.fieldErrors?.password ?? []),
+        ]}
         minLength={PASSWORD_MIN_LENGTH}
       />
-      <SubmitButton text="로그인" />
+      <SubmitButton text="로그인" pending={pending} />
     </form>
   );
 }
