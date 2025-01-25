@@ -1,14 +1,13 @@
 "use client";
 
-import { cls } from "@/libs/utils";
 import { NextPage } from "next";
-import { useFormStatus } from "react-dom";
 
 interface SubmitButtonProps {
   text: string;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   color?: "violet" | "red" | "gray";
+  pending?: boolean;
 }
 
 const SubmitButton: NextPage<SubmitButtonProps> = ({
@@ -16,6 +15,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
   type = "submit",
   onClick,
   color = "violet",
+  pending,
 }) => {
   const buttonColor = (color: "violet" | "red" | "gray") => {
     switch (color) {
@@ -24,20 +24,17 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
       case "red":
         return "bg-rose-600 focus:ring-rose-700 text-white";
       case "gray":
-        return "bg-gray-200 focus:ring-gray-400 text-black";
+        return "bg-neutral-200 focus:ring-neutral-400 text-white";
     }
   };
-  const { pending } = useFormStatus();
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={pending}
-      className={cls(
-        "px-4 py-2 rounded-md outline-none focus:ring-2 ",
-        buttonColor(color),
-        pending ? "bg-neutral-400 text-black" : ""
-      )}
+      className={`px-4 py-2 rounded-md outline-none focus:ring-2 ${buttonColor(
+        pending ? "gray" : color
+      )} ${pending ? "opacity-50 cursor-not-allowed" : ""}`}
     >
       {pending ? "로딩 중..." : text}
     </button>
