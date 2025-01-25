@@ -60,6 +60,7 @@ model Post {
   id         Int       @id @default(autoincrement())
   content    String
   tags       String?
+  photos     String[]
   views      Int       @default(0)
   is_deleted Boolean   @default(false)
   created_at DateTime  @default(now())
