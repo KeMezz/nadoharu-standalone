@@ -14,7 +14,7 @@
 
 ## 🫧 Introductions
 
-Next.js standalone version of NDHR Project. NDHR is the social network micro blog service.
+Next.js standalone version of NDHR Project. NDHR is social network micro blog service.
 
 You can see an original project here: https://github.com/GuitarCoders/front
 
