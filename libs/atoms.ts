@@ -7,6 +7,8 @@ export interface Alert {
   title?: string;
   // 모달 설명
   description?: string;
+  // 모달 설명 요소
+  descriptionElement?: React.ReactNode;
   // 닫기 버튼 표시 여부
   closeBtn?: boolean;
   // 닫기 버튼 클릭 시 실행할 함수
