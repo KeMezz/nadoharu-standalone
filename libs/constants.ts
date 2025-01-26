@@ -12,6 +12,7 @@ export const POST_CONTENT_MAX_LENGTH = 150;
 export const POST_TAGS_MAX_LENGTH = 150;
 export const COMMENT_CONTENT_MAX_LENGTH = 1000;
 export const BIO_MAX_LENGTH = 200;
+export const POST_PHOTOS_MAX_LENGTH = 4;
 
 // Error messages
 export const INVALID_TYPE_ERROR_MESSAGE = "유효하지 않은 형식입니다";
@@ -37,6 +38,7 @@ export const POST_TAGS_MAX_ERROR_MESSAGE = `태그가 너무 길어요`;
 export const COMMENT_CONTENT_MAX_ERROR_MESSAGE = `최대 ${COMMENT_CONTENT_MAX_LENGTH}자의 댓글만 작성할 수 있어요`;
 export const COMMENT_CONTENT_REQUIRED_ERROR_MESSAGE = `댓글 내용을 입력해주세요`;
 export const BIO_MAX_ERROR_MESSAGE = `자기소개는 최대 ${BIO_MAX_LENGTH}자까지만 작성할 수 있어요`;
+export const POST_PHOTOS_MAX_ERROR_MESSAGE = `최대 ${POST_PHOTOS_MAX_LENGTH}장의 사진까지 업로드 할 수 있어요`;
 
 // Friendship Status
 export const FRIEND_REJECTED = 0;
