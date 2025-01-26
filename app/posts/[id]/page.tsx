@@ -9,6 +9,8 @@ import {
 import { notFound } from "next/navigation";
 import CommentForm from "@/components/forms/comment-form";
 import RepostForm from "@/components/forms/detail-repost-form";
+import Image from "next/image";
+import Link from "next/link";
 
 async function getPost(postId: number) {
   const post = await db.post.findUnique({
@@ -71,6 +73,21 @@ export default async function PostDetail({
       <section className="divide-y pb-16">
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2 shadow-md">
+          {post.photos.length ? (
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {post.photos.map((photo) => (
+                <Link href={`${photo}/public`} key={photo}>
+                  <Image
+                    src={photo + "/avatar"}
+                    alt="post-photo"
+                    className="rounded-md aspect-video object-cover"
+                    width={1600}
+                    height={1000}
+                  />
+                </Link>
+              ))}
+            </div>
+          ) : null}
           <h5>{post.content}</h5>
           <p className="text-sm text-neutral-400">{post.tags}</p>
           <div className="flex justify-between pt-6 items-center">
