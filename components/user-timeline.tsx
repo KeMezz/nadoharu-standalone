@@ -44,6 +44,8 @@ export default function UserTimeline({
     (repost) => !originalPostIds.has(repost.post.id)
   );
 
+  const allMediaPosts = posts.filter((post) => post.photos.length > 0);
+
   const allPosts = [...posts, ...filteredReposts].sort(
     (prev, curr) =>
       new Date(curr.created_at).getTime() - new Date(prev.created_at).getTime()
@@ -83,7 +85,17 @@ export default function UserTimeline({
           )}
         </div>
       ) : null}
-      {currentTab === "media" ? <div>media</div> : null}
+      {currentTab === "media" ? (
+        <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
+          {allMediaPosts.length ? (
+            allMediaPosts.map((post) => (
+              <PostPreview key={post.id} post={post} userId={userId} />
+            ))
+          ) : (
+            <EmptyState text="아직 미디어가 없어요!" userInfo />
+          )}
+        </div>
+      ) : null}
       {currentTab === "reposts" ? (
         <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
           {reposts.length ? (

@@ -14,7 +14,7 @@ export default function RegisterForm() {
     const { name, value } = event.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
-  const [state, action] = useActionState(register, null);
+  const [state, action, pending] = useActionState(register, null);
 
   return (
     <form action={action} className="flex flex-col gap-4 p-8">
@@ -51,7 +51,7 @@ export default function RegisterForm() {
         errors={state?.fieldErrors.username}
         warning="다른 이용자에게 불쾌감을 줄 수 있는 별명은 삼가주세요!"
       />
-      <SubmitButton text="회원가입" />
+      <SubmitButton text="회원가입" pending={pending} />
     </form>
   );
 }

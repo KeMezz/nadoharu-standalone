@@ -4,15 +4,13 @@ import { PencilIcon } from "@heroicons/react/24/solid";
 import ProfileImage from "../profile-image";
 import { useActionState, useState } from "react";
 import Textarea from "../inputs/textarea";
-import {
-  getUploadUrl,
-  updateProfile,
-  UpdateProfileForm,
-} from "@/app/me/setting/action";
+import { updateProfile, UpdateProfileForm } from "@/app/me/setting/action";
 import { useSetAtom } from "jotai";
 import { alertAtom } from "@/libs/atoms";
 import { ActionPrevState } from "@/types/form";
 import { getImageUrl } from "@/libs/utils";
+import SubmitButton from "../buttons/submit-button";
+import { getUploadUrl } from "@/app/(common)/action";
 
 interface EditProfileFormProps {
   username: string;
@@ -102,7 +100,7 @@ export default function EditProfileForm({
     }
   };
 
-  const [state, action] = useActionState(updateProfileWrapper, null);
+  const [state, action, pending] = useActionState(updateProfileWrapper, null);
 
   return (
     <form action={action}>
@@ -138,9 +136,7 @@ export default function EditProfileForm({
           defaultValue={bio ?? ""}
           errors={state?.fieldErrors.bio}
         />
-        <button className="mt-4 bg-violet-400 dark:bg-violet-600 focus:ring-violet-600 text-white w-full py-2 rounded-md outline-none focus:ring-2">
-          프로필 업데이트
-        </button>
+        <SubmitButton text="프로필 업데이트" pending={pending} />
       </div>
     </form>
   );

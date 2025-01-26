@@ -8,9 +8,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ActionPrevState } from "@/types/form";
 
-interface UploadPostForm {
+export interface UploadPostForm {
   content: string;
   tags: string;
+  photos: string[];
 }
 
 const postSchema = z.object({
@@ -24,6 +25,7 @@ const postSchema = z.object({
   tags: z
     .string()
     .max(constants.POST_TAGS_MAX_LENGTH, constants.POST_TAGS_MAX_ERROR_MESSAGE),
+  photos: z.array(z.string()).max(4, constants.POST_PHOTOS_MAX_ERROR_MESSAGE),
 });
 
 export async function uploadPost(
@@ -33,6 +35,7 @@ export async function uploadPost(
   const data = {
     content: formData.get("content"),
     tags: formData.get("tags"),
+    photos: JSON.parse(formData.get("photos") as string),
   };
   const result = await postSchema.spa(data);
 
@@ -45,11 +48,8 @@ export async function uploadPost(
       data: {
         content: result.data.content,
         tags: result.data.tags,
-        user: {
-          connect: {
-            id: session.id,
-          },
-        },
+        userId: session.id,
+        photos: result.data.photos,
       },
       select: {
         id: true,

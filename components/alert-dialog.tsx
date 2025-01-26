@@ -13,6 +13,7 @@ export default function AlertDialog() {
       visible,
       title,
       description,
+      descriptionElement,
       closeBtn = true,
       closeBtnAction,
       extraBtnText,
@@ -63,6 +64,7 @@ export default function AlertDialog() {
             {title}
           </ReactAlertDialog.Title>
           <ReactAlertDialog.Description className="mt-4 mb-5 leading-normal">
+            {descriptionElement}
             {description}
           </ReactAlertDialog.Description>
           <div className="flex justify-end gap-4">

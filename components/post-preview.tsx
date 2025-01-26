@@ -6,6 +6,7 @@ import { formatRelativeTime } from "@/libs/utils";
 import PostPreviewButtons from "./buttons/post-preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "./profile-image";
+import Image from "next/image";
 
 interface PostPreviewProps {
   post: PostWithUser;
@@ -13,7 +14,7 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({
-  post: { id, user, content, tags, created_at, _count, reposts },
+  post: { id, user, content, tags, photos, created_at, _count, reposts },
   userId,
 }: PostPreviewProps) {
   const router = useRouter();
@@ -45,6 +46,22 @@ export default function PostPreview({
         {/* 본문 & 태그 */}
         <p>{content}</p>
         <p className="text-sm text-neutral-400">{tags}</p>
+
+        {/* 이미지 */}
+        {photos.length ? (
+          <div className="grid grid-cols-2 gap-2">
+            {photos.map((photo) => (
+              <Image
+                key={photo}
+                src={photo + "/avatar"}
+                alt="post-photo"
+                className="rounded-md aspect-video object-cover shadow-sm"
+                width={1600}
+                height={1000}
+              />
+            ))}
+          </div>
+        ) : null}
 
         {/* 버튼부 */}
         <PostPreviewButtons
