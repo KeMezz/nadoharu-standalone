@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ hostname: "imagedelivery.net" }],
   },
-  manifest: "/manifest.json",
 };
 
 export default nextConfig;
