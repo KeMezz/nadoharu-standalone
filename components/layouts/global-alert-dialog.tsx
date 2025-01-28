@@ -6,7 +6,7 @@ import { cls } from "@/libs/utils";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 
-export default function AlertDialog() {
+export default function GlobalAlertDialog() {
   const router = useRouter();
   const [
     {

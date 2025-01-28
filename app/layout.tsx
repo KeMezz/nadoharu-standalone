@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/components/layouts/providers";
-import AlertDialog from "@/components/alert-dialog";
+import GlobalAlertDialog from "@/components/layouts/global-alert-dialog";
+import GlobalToast from "@/components/layouts/global-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,7 +35,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <AlertDialog />
+          <GlobalToast />
+          <GlobalAlertDialog />
           {children}
         </body>
       </Providers>
