@@ -26,7 +26,10 @@ export async function sendFriendRequest(
     };
     const result = await friendRequestSchema.spa(data);
     if (!result.success) {
-      return result.error.flatten();
+      return {
+        success: false,
+        ...result.error.flatten(),
+      };
     }
 
     const recipient = await db.user.findUnique({
@@ -85,7 +88,12 @@ export async function sendFriendRequest(
     }
 
     revalidatePath(`/users/${recipientLoginId}/friends`);
-    redirect(`/users/${recipientLoginId}`);
+
+    return {
+      success: true,
+      message: "친구 신청을 성공적으로 보냈어요!",
+      fieldErrors: null,
+    };
   } catch (error) {
     console.error(error);
   }
