@@ -8,6 +8,7 @@ interface SubmitButtonProps {
   onClick?: () => void;
   color?: "violet" | "red" | "gray";
   pending?: boolean;
+  pendingText?: string;
 }
 
 const SubmitButton: NextPage<SubmitButtonProps> = ({
@@ -16,6 +17,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
   onClick,
   color = "violet",
   pending,
+  pendingText = "로딩 중...",
 }) => {
   const buttonColor = (color: "violet" | "red" | "gray") => {
     switch (color) {
@@ -36,7 +38,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
         pending ? "gray" : color
       )} ${pending ? "opacity-50 cursor-not-allowed" : ""}`}
     >
-      {pending ? "로딩 중..." : text}
+      {pending ? pendingText : text}
     </button>
   );
 };
