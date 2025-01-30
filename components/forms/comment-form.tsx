@@ -1,6 +1,6 @@
 "use client";
 
-import ChatInput from "../chat-input";
+import ChatInput from "../inputs/chat-input";
 import { useActionState } from "react";
 import { createComment } from "@/app/posts/[id]/action";
 import { ActionPrevState } from "@/types/form";
@@ -11,7 +11,7 @@ export interface CommentForm {
 }
 
 export default function CommentForm({ postId }: { postId: number }) {
-  const [state, action] = useActionState(
+  const [state, action, pending] = useActionState(
     async (state: ActionPrevState<CommentForm>, formData: FormData) =>
       createComment(state, formData, postId),
     null
@@ -20,7 +20,8 @@ export default function CommentForm({ postId }: { postId: number }) {
     <form action={action}>
       <ChatInput
         name="content"
-        placeholder="댓글 입력.."
+        placeholder={pending ? "댓글을 업로드하는 중.." : "댓글 입력.."}
+        pending={pending}
         errors={state?.fieldErrors?.content}
       />
     </form>
