@@ -24,7 +24,7 @@ export async function deleteRequest(initiatorId: number) {
     return {
       success: true,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "친구 신청 삭제 실패",
@@ -53,7 +53,7 @@ export async function acceptRequest(initiatorId: number) {
     return {
       success: true,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "친구 신청 수락 실패",

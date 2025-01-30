@@ -5,7 +5,7 @@ import MoreButtons, { MoreBtn } from "./more-buttons";
 import { useRouter } from "next/navigation";
 import { deletePost } from "@/app/posts/[id]/action";
 import { useSetAtom } from "jotai";
-import { alertAtom } from "@/libs/atoms";
+import { alertAtom, toastAtom } from "@/libs/atoms";
 
 export default function PostDetailMoreBtns({
   isUserPost,
@@ -16,12 +16,19 @@ export default function PostDetailMoreBtns({
 }) {
   const router = useRouter();
   const setAlert = useSetAtom(alertAtom);
+  const setToast = useSetAtom(toastAtom);
+
   const removePost = async () => {
-    const res = await deletePost(postId);
-    if (res.success) {
+    const result = await deletePost(postId);
+    if (result.success) {
       router.push("/posts");
+      setToast({
+        visible: true,
+        title: "게시글이 삭제되었습니다.",
+      });
     }
   };
+
   const showRemoveAlert = () => {
     setAlert({
       visible: true,

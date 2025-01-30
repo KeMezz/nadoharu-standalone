@@ -2,10 +2,10 @@
 
 import db from "@/libs/db";
 import getSession from "@/libs/session";
-import Image from "next/image";
 import ReceiveRequestForm from "@/components/forms/receive-request-form";
 import Link from "next/link";
 import ProfileImage from "@/components/profile-image";
+import EmptyState from "@/components/layouts/empty-state";
 
 async function getFriendRequests(userId: number) {
   const requests = await db.friendship.findMany({
@@ -34,6 +34,9 @@ export default async function Requested() {
 
   return (
     <section className="flex flex-col gap-4 p-4">
+      {requests.length === 0 ? (
+        <EmptyState text="받은 친구 신청이 없어요!" noNav />
+      ) : null}
       {requests.map((request) => (
         <div
           key={request.id}

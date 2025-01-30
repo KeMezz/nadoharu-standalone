@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CommentMoreBtns from "./buttons/comment-more-button";
 import ProfileImage from "./profile-image";
+
 interface CommentProps {
   avatar: string | null;
   username: string;

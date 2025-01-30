@@ -88,8 +88,12 @@ export async function repost(postId: number) {
     revalidatePath(`/posts/${postId}`);
 
     return { success: true };
-  } catch {
-    throw new Error("리포스트 실패");
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "'나도!'를 처리하는 도중에 오류가 발생했어요.",
+    };
   }
 }
 
@@ -125,8 +129,12 @@ export async function unrepost(postId: number) {
     revalidatePath(`/posts/${postId}`);
 
     return { success: true };
-  } catch {
-    throw new Error("리포스트 취소 실패");
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "'나도!'를 취소하는 도중에 오류가 발생했어요.",
+    };
   }
 }
 
@@ -142,8 +150,12 @@ export async function deletePost(postId: number) {
     });
 
     return { success: true };
-  } catch {
-    throw new Error("게시물 삭제 실패");
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "게시물 삭제하는 도중에 오류가 발생했어요.",
+    };
   }
 }
 
@@ -153,7 +165,11 @@ export async function deleteComment(commentId: number, postId: number) {
       where: { id: commentId },
     });
     revalidatePath(`/posts/${postId}`);
-  } catch {
-    throw new Error("댓글 삭제 실패");
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "댓글 삭제하는 도중에 오류가 발생했어요.",
+    };
   }
 }

@@ -3,7 +3,7 @@
 import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/16/solid";
 import MoreButtons, { MoreBtn } from "./more-buttons";
 import { useSetAtom } from "jotai";
-import { alertAtom } from "@/libs/atoms";
+import { alertAtom, toastAtom } from "@/libs/atoms";
 import { deleteComment } from "@/app/posts/[id]/action";
 
 export default function CommentMoreBtns({
@@ -16,8 +16,13 @@ export default function CommentMoreBtns({
   postId: number;
 }) {
   const setAlert = useSetAtom(alertAtom);
+  const setToast = useSetAtom(toastAtom);
   const removeComment = async () => {
     await deleteComment(commentId, postId);
+    setToast({
+      visible: true,
+      title: "댓글이 삭제되었습니다.",
+    });
   };
   const showRemoveAlert = () => {
     setAlert({

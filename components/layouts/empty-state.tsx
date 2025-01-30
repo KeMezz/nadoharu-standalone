@@ -1,4 +1,4 @@
-import { FaceFrownIcon } from "@heroicons/react/24/solid";
+import { FaceSmileIcon } from "@heroicons/react/24/solid";
 
 export default function EmptyState({
   text,
@@ -10,8 +10,8 @@ export default function EmptyState({
   userInfo?: boolean;
 }) {
   const height = {
-    full: "h-[calc(100vh-152px)]",
-    noNav: "h-[calc(100vh-80px)]",
+    full: "h-[calc(100dvh-152px)]",
+    noNav: "h-[calc(100dvh-56px)]",
     userInfo: "h-[350px]",
   };
   return (
@@ -20,7 +20,7 @@ export default function EmptyState({
         height[noNav ? "noNav" : userInfo ? "userInfo" : "full"]
       } text-gray-400`}
     >
-      <FaceFrownIcon className="size-10" />
+      <FaceSmileIcon className="size-10" />
       <h3 className="font-medium text-lg">{text}</h3>
     </section>
   );

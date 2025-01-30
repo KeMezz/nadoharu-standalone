@@ -1,5 +1,5 @@
 import ChatBubble from "@/components/chat-bubble";
-import ChatInput from "@/components/chat-input";
+import ChatInput from "@/components/inputs/chat-input";
 import { notFound } from "next/navigation";
 
 export default async function ChatDetail({

@@ -1,3 +1,4 @@
+import EmptyState from "@/components/layouts/empty-state";
 import ProfileImage from "@/components/profile-image";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
@@ -90,6 +91,9 @@ export default async function Friends({
             <ChevronRightIcon className="size-4" />
           </Link>
         </div>
+      ) : null}
+      {friends.length === 0 ? (
+        <EmptyState text="친구 목록이 비었습니다" noNav />
       ) : null}
       <div className="flex flex-col gap-4">
         {friends.map((friend) => (

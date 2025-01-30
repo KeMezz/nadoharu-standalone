@@ -1,12 +1,15 @@
 "use client";
 
+import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useSetAtom } from "jotai";
+import { toastAtom } from "@/libs/atoms";
 import {
   sendFriendRequest,
   SendFriendRequestForm,
 } from "@/app/users/[id]/send-request/action";
-import SubmitButton from "../buttons/submit-button";
-import Textarea from "../inputs/textarea";
-import { useActionState } from "react";
+import SubmitButton from "@/components/buttons/submit-button";
+import Textarea from "@/components/inputs/textarea";
 import { ActionPrevState } from "@/types/form";
 
 interface SendRequestFormProps {
@@ -18,19 +21,39 @@ export default function SendRequestForm({
   username,
   loginId,
 }: SendRequestFormProps) {
-  const [state, action] = useActionState(
-    (_: ActionPrevState<SendFriendRequestForm>, formData: FormData) =>
-      sendFriendRequest(_, formData, loginId),
-    null
-  );
+  const router = useRouter();
+  const setToast = useSetAtom(toastAtom);
+
+  const handleSubmit = async (
+    state: ActionPrevState<SendFriendRequestForm>,
+    formData: FormData
+  ) => {
+    const result = await sendFriendRequest(state, formData, loginId);
+    if (result?.success) {
+      setToast({
+        visible: true,
+        title: result?.message,
+      });
+
+      router.push(`/users/${loginId}`);
+    }
+
+    return result;
+  };
+  const [state, action, pending] = useActionState(handleSubmit, null);
+
   return (
     <form action={action} className="flex flex-col gap-4 p-4">
       <Textarea
         name="text"
         placeholder={`${username}님, 저랑 친구해요!`}
-        errors={state?.fieldErrors.text}
+        errors={state?.fieldErrors?.text}
       />
-      <SubmitButton text="친구 신청 보내기" />
+      <SubmitButton
+        text="친구 신청 보내기"
+        pending={pending}
+        pendingText="친구 신청 보내는 중..."
+      />
     </form>
   );
 }
