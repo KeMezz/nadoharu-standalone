@@ -45,7 +45,11 @@ export async function login(_: LoginActionState | null, formData: FormData) {
   };
   const result = await formSchema.spa(data);
   if (!result.success) {
-    return result.error.flatten();
+    return {
+      fieldErrors: {
+        password: [constants.INVALID_USER_MESSAGE],
+      },
+    };
   }
 
   const user = await db.user.findUnique({
@@ -66,7 +70,6 @@ export async function login(_: LoginActionState | null, formData: FormData) {
   } else {
     return {
       fieldErrors: {
-        login_id: [constants.INVALID_USER_MESSAGE],
         password: [constants.INVALID_USER_MESSAGE],
       },
     };
