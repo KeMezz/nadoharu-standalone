@@ -21,10 +21,7 @@ export default function LoginForm() {
         type="password"
         placeholder="비밀번호"
         required={true}
-        errors={[
-          ...(state?.fieldErrors?.login_id ?? []),
-          ...(state?.fieldErrors?.password ?? []),
-        ]}
+        errors={state?.fieldErrors?.password}
         minLength={PASSWORD_MIN_LENGTH}
       />
       <SubmitButton text="로그인" pending={pending} />
