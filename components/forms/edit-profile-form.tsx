@@ -15,14 +15,14 @@ import { getUploadUrl } from "@/app/(common)/action";
 interface EditProfileFormProps {
   username: string;
   avatar: string | null;
-  login_id: string;
+  loginId: string;
   bio: string | null;
 }
 
 export default function EditProfileForm({
   username,
   avatar,
-  login_id,
+  loginId,
   bio,
 }: EditProfileFormProps) {
   const setAlert = useSetAtom(alertAtom);
@@ -127,7 +127,7 @@ export default function EditProfileForm({
             <div className="flex items-center gap-3">
               <h5 className="font-semibold">{username}</h5>
             </div>
-            <p className="text-gray-400 text-sm">@{login_id}</p>
+            <p className="text-gray-400 text-sm">@{loginId}</p>
           </div>
         </div>
         <Textarea

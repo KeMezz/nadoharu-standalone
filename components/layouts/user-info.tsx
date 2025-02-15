@@ -14,7 +14,7 @@ interface UserTemplateProps {
   profile: {
     id: number;
     username: string;
-    login_id: string;
+    loginId: string;
     bio: string | null;
     avatar: string | null;
   };
@@ -36,7 +36,7 @@ export default function UserInfo({
         <div className="flex flex-col gap-3 mt-20">
           <div className="absolute right-4 top-4 flex gap-2">
             <Link
-              href={`/users/${profile.login_id}/friends`}
+              href={`/users/${profile.loginId}/friends`}
               className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1 relative"
             >
               {pendedCount ? (
@@ -58,7 +58,7 @@ export default function UserInfo({
             ) : null}
             {!isMe && !isFriend && !isPending && !isPended ? (
               <Link
-                href={`/users/${profile.login_id}/send-request`}
+                href={`/users/${profile.loginId}/send-request`}
                 className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
               >
                 <UserPlusIcon className="size-4" />
@@ -95,7 +95,7 @@ export default function UserInfo({
                 </span>
               ) : null}
             </div>
-            <p className="text-gray-400 text-sm">@{profile?.login_id}</p>
+            <p className="text-gray-400 text-sm">@{profile?.loginId}</p>
           </div>
         </div>
         {profile?.bio ? (

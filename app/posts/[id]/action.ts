@@ -145,7 +145,7 @@ export async function deletePost(postId: number) {
         id: postId,
       },
       data: {
-        is_deleted: true,
+        isDeleted: true,
       },
     });
 

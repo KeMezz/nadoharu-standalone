@@ -4,12 +4,12 @@ import { notFound } from "next/navigation";
 
 async function getUser(userLoginId: string) {
   const user = await db.user.findUnique({
-    where: { login_id: userLoginId },
+    where: { loginId: userLoginId },
     select: {
       id: true,
       username: true,
       avatar: true,
-      login_id: true,
+      loginId: true,
     },
   });
 

@@ -6,7 +6,7 @@ import SendRequestForm from "@/components/forms/send-request-form";
 async function getRecipient(loginId: string) {
   const recipient = await db.user.findUnique({
     where: {
-      login_id: loginId,
+      loginId: loginId,
     },
     select: {
       id: true,

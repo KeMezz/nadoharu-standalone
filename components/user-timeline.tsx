@@ -48,7 +48,7 @@ export default function UserTimeline({
 
   const allPosts = [...posts, ...filteredReposts].sort(
     (prev, curr) =>
-      new Date(curr.created_at).getTime() - new Date(prev.created_at).getTime()
+      new Date(curr.createdAt).getTime() - new Date(prev.createdAt).getTime()
   );
 
   return (

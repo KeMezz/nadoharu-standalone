@@ -9,16 +9,16 @@ import { redirect } from "next/navigation";
 
 type LoginActionState = {
   fieldErrors: {
-    login_id?: string[];
+    loginId?: string[];
     password?: string[];
   };
   formErrors?: string[];
 };
 
-const checkLoginIdExists = async (login_id: string) => {
+const checkLoginIdExists = async (loginId: string) => {
   const user = await db.user.findUnique({
     where: {
-      login_id,
+      loginId,
     },
     select: {
       id: true,
@@ -29,7 +29,7 @@ const checkLoginIdExists = async (login_id: string) => {
 };
 
 const formSchema = z.object({
-  login_id: z
+  loginId: z
     .string()
     .refine(checkLoginIdExists, constants.INVALID_USER_MESSAGE),
   password: z
@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 export async function login(_: LoginActionState | null, formData: FormData) {
   const data = {
-    login_id: formData.get("login_id"),
+    loginId: formData.get("loginId"),
     password: formData.get("password"),
   };
   const result = await formSchema.spa(data);
@@ -54,7 +54,7 @@ export async function login(_: LoginActionState | null, formData: FormData) {
 
   const user = await db.user.findUnique({
     where: {
-      login_id: result.data.login_id,
+      loginId: result.data.loginId,
     },
     select: {
       id: true,

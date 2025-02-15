@@ -7,7 +7,7 @@ export interface PostWithUser extends Post {
   user: {
     id: number;
     username: string;
-    login_id: string;
+    loginId: string;
     avatar: string | null;
   };
   reposts: { id?: number }[];
@@ -21,7 +21,7 @@ export interface RepostWithUser extends Repost {
   user: {
     id: number;
     username: string;
-    login_id: string;
+    loginId: string;
     avatar: string | null;
   };
   post: PostWithUser;
@@ -44,7 +44,7 @@ export default function Timeline({ posts, reposts, userId }: TimelineProps) {
 
   const allPosts = [...posts, ...filteredReposts].sort(
     (prev, curr) =>
-      new Date(curr.created_at).getTime() - new Date(prev.created_at).getTime()
+      new Date(curr.createdAt).getTime() - new Date(prev.createdAt).getTime()
   );
 
   return (

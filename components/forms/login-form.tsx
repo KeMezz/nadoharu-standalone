@@ -11,7 +11,7 @@ export default function LoginForm() {
   return (
     <form action={action} className="flex flex-col gap-4 p-8">
       <TextInput
-        name="login_id"
+        name="loginId"
         type="text"
         placeholder="아이디"
         required={true}

@@ -34,7 +34,7 @@ export async function sendFriendRequest(
 
     const recipient = await db.user.findUnique({
       where: {
-        login_id: recipientLoginId,
+        loginId: recipientLoginId,
       },
       select: {
         id: true,

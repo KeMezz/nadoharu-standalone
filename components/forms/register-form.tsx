@@ -7,7 +7,7 @@ import register from "@/app/(auth)/register/action";
 
 export default function RegisterForm() {
   const [formState, setFormState] = useState({
-    login_id: "",
+    loginId: "",
     username: "",
   });
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,13 +19,13 @@ export default function RegisterForm() {
   return (
     <form action={action} className="flex flex-col gap-4 p-8">
       <TextInput
-        name="login_id"
+        name="loginId"
         type="text"
         placeholder="아이디"
-        value={formState.login_id}
+        value={formState.loginId}
         onChange={handleInputChange}
         required={true}
-        errors={state?.fieldErrors.login_id}
+        errors={state?.fieldErrors.loginId}
       />
       <TextInput
         name="password"

@@ -14,7 +14,7 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({
-  post: { id, user, content, tags, photos, created_at, _count, reposts },
+  post: { id, user, content, tags, photos, createdAt, _count, reposts },
   userId,
 }: PostPreviewProps) {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function PostPreview({
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    router.push(`/users/${user.login_id}`);
+    router.push(`/users/${user.loginId}`);
   };
 
   return (
@@ -39,7 +39,7 @@ export default function PostPreview({
             </div>
           </button>
           <p className="text-sm text-neutral-400">
-            {formatRelativeTime(created_at)}
+            {formatRelativeTime(createdAt)}
           </p>
         </section>
 

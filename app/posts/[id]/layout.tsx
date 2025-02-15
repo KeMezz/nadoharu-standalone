@@ -32,7 +32,7 @@ async function getPostUser(postId: number) {
       id: true,
       username: true,
       avatar: true,
-      login_id: true,
+      loginId: true,
     },
   });
 

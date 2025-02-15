@@ -6,11 +6,11 @@ import { notFound } from "next/navigation";
 
 async function getUser(userLoginId: string) {
   const user = await db.user.findUnique({
-    where: { login_id: userLoginId },
+    where: { loginId: userLoginId },
     select: {
       id: true,
       username: true,
-      login_id: true,
+      loginId: true,
       bio: true,
       avatar: true,
     },
@@ -34,9 +34,9 @@ async function getPosts(userLoginId: string) {
   const posts = await db.post.findMany({
     where: {
       user: {
-        login_id: userLoginId,
+        loginId: userLoginId,
       },
-      is_deleted: false,
+      isDeleted: false,
     },
     include: {
       user: true,
@@ -52,16 +52,16 @@ async function getReposts(userLoginId: string) {
   const reposts = await db.repost.findMany({
     where: {
       user: {
-        login_id: userLoginId,
+        loginId: userLoginId,
       },
       post: {
-        is_deleted: false,
+        isDeleted: false,
       },
     },
     distinct: ["postId"],
     orderBy: {
       post: {
-        created_at: "asc",
+        createdAt: "asc",
       },
     },
     include: {
@@ -69,7 +69,7 @@ async function getReposts(userLoginId: string) {
         select: {
           id: true,
           username: true,
-          login_id: true,
+          loginId: true,
           avatar: true,
         },
       },
@@ -79,14 +79,14 @@ async function getReposts(userLoginId: string) {
             select: {
               id: true,
               username: true,
-              login_id: true,
+              loginId: true,
               avatar: true,
             },
           },
           reposts: {
             where: {
               user: {
-                login_id: userLoginId,
+                loginId: userLoginId,
               },
             },
             select: {

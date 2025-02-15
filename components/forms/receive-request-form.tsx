@@ -11,13 +11,13 @@ interface ReceiveRequestFormProps {
   recipientId: number;
   status: number;
   text: string | null;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   initiator: {
     id: number;
     username: string;
     avatar: string | null;
-    login_id: string;
+    loginId: string;
   };
 }
 

@@ -9,7 +9,7 @@ async function getIsMe(loginId: string) {
   const session = await getSession();
   const targetUser = await db.user.findUnique({
     where: {
-      login_id: loginId,
+      loginId: loginId,
     },
     select: {
       id: true,
@@ -23,8 +23,8 @@ async function getFriends(loginId: string) {
   const friends = await db.friendship.findMany({
     where: {
       OR: [
-        { initiator: { login_id: loginId } },
-        { recipient: { login_id: loginId } },
+        { initiator: { loginId: loginId } },
+        { recipient: { loginId: loginId } },
       ],
       status: 1,
     },
@@ -34,7 +34,7 @@ async function getFriends(loginId: string) {
           id: true,
           username: true,
           avatar: true,
-          login_id: true,
+          loginId: true,
         },
       },
       recipient: {
@@ -42,7 +42,7 @@ async function getFriends(loginId: string) {
           id: true,
           username: true,
           avatar: true,
-          login_id: true,
+          loginId: true,
         },
       },
     },
@@ -53,7 +53,7 @@ async function getFriends(loginId: string) {
 async function getPendingFriendsCount(loginId: string) {
   const pendingFriendsCount = await db.friendship.count({
     where: {
-      OR: [{ recipient: { login_id: loginId } }],
+      OR: [{ recipient: { loginId: loginId } }],
       status: 2,
     },
   });
@@ -69,7 +69,7 @@ export default async function Friends({
   const { id: loginId } = await params;
   const friendships = await getFriends(loginId);
   const friends = friendships.map((friendship) =>
-    friendship.initiator.login_id === loginId
+    friendship.initiator.loginId === loginId
       ? friendship.recipient
       : friendship.initiator
   );
@@ -99,14 +99,14 @@ export default async function Friends({
         {friends.map((friend) => (
           <Link
             key={friend.id}
-            href={`/users/${friend.login_id}`}
+            href={`/users/${friend.loginId}`}
             className="flex items-center gap-4"
           >
             <ProfileImage avatar={friend.avatar} username={friend.username} />
             <div className="flex flex-col">
               <span className="font-medium text-sm">{friend.username}</span>
               <span className="text-xs text-neutral-500">
-                @{friend.login_id}
+                @{friend.loginId}
               </span>
             </div>
           </Link>
