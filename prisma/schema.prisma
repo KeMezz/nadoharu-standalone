@@ -14,83 +14,114 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  login_id   String       @unique
-  password   String?
-  username   String
-  bio        String?
-  email      String?      @unique
-  github_id  String?      @unique
-  avatar     String?      @unique
-  is_deleted Boolean      @default(false)
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
-  tokens     Token[]
-  posts      Post[]
-  reposts    Repost[]
-  comments   Comment[]
-  friends    Friendship[] @relation("FriendsAsInitiator")
-  friendOf   Friendship[] @relation("FriendsAsRecipient")
+  id            Int             @id @default(autoincrement())
+  loginId       String          @unique
+  password      String?
+  username      String
+  bio           String?
+  email         String?         @unique
+  githubId      String?         @unique
+  avatar        String?         @unique
+  isDeleted     Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  tokens        Token[]
+  posts         Post[]
+  reposts       Repost[]
+  comments      Comment[]
+  friends       Friendship[]    @relation("FriendsAsInitiator")
+  friendOf      Friendship[]    @relation("FriendsAsRecipient")
+  notifications Notifications[]
 }
 
 model Friendship {
-  id          Int      @id @default(autoincrement())
-  status      Int      @default(2) // 0: rejected, 1: accepted, 2: pending
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  text        String?
-  initiator   User     @relation("FriendsAsInitiator", fields: [initiatorId], references: [id])
-  initiatorId Int
-  recipient   User     @relation("FriendsAsRecipient", fields: [recipientId], references: [id])
-  recipientId Int
+  id            Int             @id @default(autoincrement())
+  status        Int             @default(2) // 0: rejected, 1: accepted, 2: pending
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  text          String?
+  initiator     User            @relation("FriendsAsInitiator", fields: [initiatorId], references: [id])
+  initiatorId   Int
+  recipient     User            @relation("FriendsAsRecipient", fields: [recipientId], references: [id])
+  recipientId   Int
+  notifications Notifications[]
 
   @@unique([initiatorId, recipientId])
 }
 
 model Token {
-  id         Int      @id @default(autoincrement())
-  token      String   @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 model Post {
-  id         Int       @id @default(autoincrement())
-  content    String
-  tags       String?
-  photos     String[]
-  views      Int       @default(0)
-  is_deleted Boolean   @default(false)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  user       User      @relation(fields: [userId], references: [id])
-  userId     Int
-  reposts    Repost[]
-  comments   Comment[]
+  id        Int       @id @default(autoincrement())
+  content   String
+  tags      String?
+  photos    String[]
+  views     Int       @default(0)
+  isDeleted Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  reposts   Repost[]
+  comments  Comment[]
 }
 
 model Repost {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     Int
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int
+  post          Post            @relation(fields: [postId], references: [id])
+  postId        Int
+  notifications Notifications[]
 
   @@unique([userId, postId])
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  content    String
-  is_deleted Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     Int
+  id            Int             @id @default(autoincrement())
+  content       String
+  isDeleted     Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int
+  post          Post            @relation(fields: [postId], references: [id])
+  postId        Int
+  notifications Notifications[]
+}
+
+model Notifications {
+  id           Int              @id @default(autoincrement())
+  type         NotificationType
+  isRead       Boolean          @default(false)
+  message      String
+  actionUrl    String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  user         User             @relation(fields: [userId], references: [id])
+  userId       Int
+  friendship   Friendship?      @relation(fields: [friendshipId], references: [id])
+  friendshipId Int?
+  repost       Repost?          @relation(fields: [repostId], references: [id])
+  repostId     Int?
+  comment      Comment?         @relation(fields: [commentId], references: [id])
+  commentId    Int?
+
+  @@index([userId, createdAt])
+  @@index([isRead, userId])
+}
+
+enum NotificationType {
+  FRIEND_REQUEST
+  REPOST
+  COMMENT
 }
