@@ -113,9 +113,9 @@ const Layout: NextPage<LayoutProps> = ({
       {canGoBack ? null : (
         <footer className="max-w-2xl w-full grid grid-cols-4 mx-auto h-20 bg-violet-600 dark:bg-neutral-800 fixed bottom-0 border-t-2 border-violet-800 dark:border-violet-400 z-20">
           <FooterItem title="모아보는" link="/posts" />
+          <FooterItem title="알림" link="/notifications" />
           <FooterItem title="메시지" link="/chat" />
           <FooterItem title="나는" link="/me" />
-          <FooterItem title="친구들은" link="/friends" />
         </footer>
       )}
     </main>

@@ -1,22 +1,22 @@
 "use client";
 
 import {
+  BellIcon,
   ChatBubbleLeftRightIcon,
   RectangleStackIcon,
   UserIcon,
-  UsersIcon,
 } from "@heroicons/react/24/solid";
 import {
+  BellIcon as BellOutlineIcon,
   RectangleStackIcon as RectangleStackOutlineIcon,
   UserIcon as UserOutlineIcon,
-  UsersIcon as UsersOutlineIcon,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightOutlineIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cls } from "@/libs/utils";
 
-export type Tabs = "/posts" | "/chat" | "/me" | "/friends";
+export type Tabs = "/posts" | "/notifications" | "/chat" | "/me";
 
 interface FooterItemProps {
   title: string;
@@ -32,9 +32,9 @@ const icons = {
     active: <UserIcon className="size-5" />,
     inactive: <UserOutlineIcon className="size-5" />,
   },
-  "/friends": {
-    active: <UsersIcon className="size-5" />,
-    inactive: <UsersOutlineIcon className="size-5" />,
+  "/notifications": {
+    active: <BellIcon className="size-5" />,
+    inactive: <BellOutlineIcon className="size-5" />,
   },
   "/chat": {
     active: <ChatBubbleLeftRightIcon className="size-5" />,
