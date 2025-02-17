@@ -14,24 +14,25 @@ datasource db {
 }
 
 model User {
-  id            Int             @id @default(autoincrement())
-  loginId       String          @unique
-  password      String?
-  username      String
-  bio           String?
-  email         String?         @unique
-  githubId      String?         @unique
-  avatar        String?         @unique
-  isDeleted     Boolean         @default(false)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  tokens        Token[]
-  posts         Post[]
-  reposts       Repost[]
-  comments      Comment[]
-  friends       Friendship[]    @relation("FriendsAsInitiator")
-  friendOf      Friendship[]    @relation("FriendsAsRecipient")
-  notifications Notifications[]
+  id                     Int             @id @default(autoincrement())
+  loginId                String          @unique
+  password               String?
+  username               String
+  bio                    String?
+  email                  String?         @unique
+  githubId               String?         @unique
+  avatar                 String?         @unique
+  isDeleted              Boolean         @default(false)
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  tokens                 Token[]
+  posts                  Post[]
+  reposts                Repost[]
+  comments               Comment[]
+  friends                Friendship[]    @relation("FriendsAsInitiator")
+  friendOf               Friendship[]    @relation("FriendsAsRecipient")
+  recipientNotifications Notifications[] @relation("RecipientNotifications")
+  initiatedNotifications Notifications[] @relation("InitiatorNotifications")
 }
 
 model Friendship {
@@ -107,8 +108,10 @@ model Notifications {
   actionUrl    String
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
-  user         User             @relation(fields: [userId], references: [id])
-  userId       Int
+  recipient    User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
+  recipientId  Int
+  initiator    User             @relation("InitiatorNotifications", fields: [initiatorId], references: [id])
+  initiatorId  Int
   friendship   Friendship?      @relation(fields: [friendshipId], references: [id])
   friendshipId Int?
   repost       Repost?          @relation(fields: [repostId], references: [id])
@@ -116,8 +119,8 @@ model Notifications {
   comment      Comment?         @relation(fields: [commentId], references: [id])
   commentId    Int?
 
-  @@index([userId, createdAt])
-  @@index([isRead, userId])
+  @@index([recipientId, createdAt])
+  @@index([isRead, recipientId])
 }
 
 enum NotificationType {
