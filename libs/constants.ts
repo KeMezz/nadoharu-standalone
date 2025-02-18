@@ -53,4 +53,11 @@ export const TABS = [
   { name: "나는", link: "/me" },
 ];
 
+// Notifications
+export const NOTIFICATIONS_TITLE = {
+  FRIEND_REQUEST: "친구 신청",
+  REPOST: "나도!",
+  COMMENT: "댓글",
+};
+
 export const CF_DIRECT_UPLOAD_URL = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v2/direct_upload`;
