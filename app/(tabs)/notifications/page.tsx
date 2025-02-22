@@ -11,6 +11,10 @@ async function getNotifications() {
   const notifications = await db.notifications.findMany({
     where: {
       recipientId: session.id,
+      isRead: false,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
     select: {
       id: true,
@@ -44,7 +48,7 @@ export default async function Notification() {
   }
 
   return (
-    <div className="p-4 gap-4">
+    <div className="flex flex-col p-4 gap-4">
       {notifications.map((noti) => (
         <Link
           key={noti.id}
