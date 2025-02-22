@@ -32,14 +32,14 @@ async function getFeeds(userId: number) {
       userId: {
         in: feedUserIds,
       },
-      is_deleted: false,
+      isDeleted: false,
     },
     include: {
       user: {
         select: {
           id: true,
           username: true,
-          login_id: true,
+          loginId: true,
           avatar: true,
         },
       },
@@ -65,13 +65,13 @@ async function getFeeds(userId: number) {
         in: feedUserIds,
       },
       post: {
-        is_deleted: false,
+        isDeleted: false,
       },
     },
     distinct: ["postId"],
     orderBy: {
       post: {
-        created_at: "asc",
+        createdAt: "asc",
       },
     },
     include: {
@@ -79,7 +79,7 @@ async function getFeeds(userId: number) {
         select: {
           id: true,
           username: true,
-          login_id: true,
+          loginId: true,
           avatar: true,
         },
       },
@@ -89,7 +89,7 @@ async function getFeeds(userId: number) {
             select: {
               id: true,
               username: true,
-              login_id: true,
+              loginId: true,
               avatar: true,
             },
           },

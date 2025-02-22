@@ -12,7 +12,7 @@ async function getUser(userId: number) {
     select: {
       id: true,
       username: true,
-      login_id: true,
+      loginId: true,
       bio: true,
       avatar: true,
     },
@@ -43,7 +43,7 @@ export default async function EditProfile() {
       <EditProfileForm
         username={user.username}
         avatar={user.avatar}
-        login_id={user.login_id}
+        loginId={user.loginId}
         bio={user.bio}
       />
       <form action={logout} className="p-4">

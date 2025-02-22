@@ -16,7 +16,7 @@ async function getUser(userId: number) {
     select: {
       id: true,
       username: true,
-      login_id: true,
+      loginId: true,
       avatar: true,
       bio: true,
     },
@@ -40,7 +40,7 @@ async function getPosts(userId: number) {
   const posts = await db.post.findMany({
     where: {
       userId,
-      is_deleted: false,
+      isDeleted: false,
     },
     include: {
       user: true,
@@ -57,13 +57,13 @@ async function getReposts(userId: number) {
     where: {
       userId,
       post: {
-        is_deleted: false,
+        isDeleted: false,
       },
     },
     distinct: ["postId"],
     orderBy: {
       post: {
-        created_at: "asc",
+        createdAt: "asc",
       },
     },
     include: {
@@ -71,7 +71,7 @@ async function getReposts(userId: number) {
         select: {
           id: true,
           username: true,
-          login_id: true,
+          loginId: true,
           avatar: true,
         },
       },
@@ -81,7 +81,7 @@ async function getReposts(userId: number) {
             select: {
               id: true,
               username: true,
-              login_id: true,
+              loginId: true,
               avatar: true,
             },
           },

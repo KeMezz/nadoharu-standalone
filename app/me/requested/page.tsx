@@ -19,7 +19,7 @@ async function getFriendRequests(userId: number) {
           id: true,
           username: true,
           avatar: true,
-          login_id: true,
+          loginId: true,
         },
       },
     },
@@ -43,7 +43,7 @@ export default async function Requested() {
           className="flex flex-col gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 shadow-md rounded-md"
         >
           <Link
-            href={`/users/${request.initiator.login_id}`}
+            href={`/users/${request.initiator.loginId}`}
             className="flex items-center gap-4"
           >
             <ProfileImage
@@ -53,7 +53,7 @@ export default async function Requested() {
             <div className="flex flex-col">
               <span className="font-medium">{request.initiator.username}</span>
               <span className="text-xs text-neutral-500">
-                @{request.initiator.login_id}
+                @{request.initiator.loginId}
               </span>
             </div>
           </Link>

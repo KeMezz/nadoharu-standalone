@@ -23,7 +23,7 @@ export default function RepostPreview({
       _count,
       reposts,
       user: postUser,
-      created_at: postCreatedAt,
+      createdAt: postCreatedAt,
     },
   },
   userId,
@@ -34,7 +34,7 @@ export default function RepostPreview({
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    router.push(`/users/${postUser.login_id}`);
+    router.push(`/users/${postUser.loginId}`);
   };
 
   return (

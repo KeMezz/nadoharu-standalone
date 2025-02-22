@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import { ActionPrevState } from "@/types/form";
 
 interface RegisterForm {
-  login_id: string;
+  loginId: string;
   password: string;
   confirm_password: string;
   username: string;
@@ -30,7 +30,7 @@ const checkLoginId = (username: string) =>
 
 const formSchema = z
   .object({
-    login_id: z
+    loginId: z
       .string({
         invalid_type_error: constants.INVALID_TYPE_ERROR_MESSAGE,
         required_error: constants.REQUIRED_ERROR_MESSAGE,
@@ -56,10 +56,10 @@ const formSchema = z
       .toLowerCase()
       .trim(),
   })
-  .superRefine(async ({ login_id }, ctx) => {
+  .superRefine(async ({ loginId }, ctx) => {
     const user = await db.user.findUnique({
       where: {
-        login_id,
+        loginId,
       },
       select: {
         id: true,
@@ -69,7 +69,7 @@ const formSchema = z
       ctx.addIssue({
         code: "custom",
         message: constants.LOGIN_ID_ALREADY_EXISTS_MESSAGE,
-        path: ["login_id"],
+        path: ["loginId"],
         fatal: true,
       });
       return z.NEVER;
@@ -85,7 +85,7 @@ export default async function register(
   formData: FormData
 ) {
   const data = {
-    login_id: formData.get("login_id"),
+    loginId: formData.get("loginId"),
     password: formData.get("password"),
     confirm_password: formData.get("confirm_password"),
     username: formData.get("username"),
@@ -99,7 +99,7 @@ export default async function register(
   const hashedPassword = await bcrypt.hash(result.data.password, 12);
   const user = await db.user.create({
     data: {
-      login_id: result.data.login_id,
+      loginId: result.data.loginId,
       username: result.data.username,
       password: hashedPassword,
     },

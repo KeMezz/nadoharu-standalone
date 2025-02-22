@@ -7,7 +7,10 @@ import { revalidatePath } from "next/cache";
 export async function deleteRequest(initiatorId: number) {
   try {
     const session = await getSession();
-    await db.friendship.update({
+    const friendship = await db.friendship.update({
+      select: {
+        id: true,
+      },
       where: {
         initiatorId_recipientId: {
           initiatorId: initiatorId,
@@ -19,6 +22,16 @@ export async function deleteRequest(initiatorId: number) {
         status: 0,
       },
     });
+
+    await db.notifications.updateMany({
+      where: {
+        friendshipId: friendship.id,
+      },
+      data: {
+        isRead: true,
+      },
+    });
+
     revalidatePath("/me/requested");
 
     return {
@@ -36,7 +49,10 @@ export async function acceptRequest(initiatorId: number) {
   try {
     const session = await getSession();
 
-    await db.friendship.update({
+    const friendship = await db.friendship.update({
+      select: {
+        id: true,
+      },
       where: {
         initiatorId_recipientId: {
           initiatorId: initiatorId,
@@ -49,6 +65,15 @@ export async function acceptRequest(initiatorId: number) {
       },
     });
     revalidatePath("/me/requested");
+
+    await db.notifications.updateMany({
+      where: {
+        friendshipId: friendship.id,
+      },
+      data: {
+        isRead: true,
+      },
+    });
 
     return {
       success: true,

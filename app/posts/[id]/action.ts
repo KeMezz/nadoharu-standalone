@@ -33,7 +33,10 @@ export async function createComment(
 
   const session = await getSession();
   if (session.id) {
-    await db.comment.create({
+    const comment = await db.comment.create({
+      select: {
+        id: true,
+      },
       data: {
         content: result.data.content,
         user: {
@@ -48,8 +51,47 @@ export async function createComment(
         },
       },
     });
-
     revalidatePath(`/posts/${postId}`);
+
+    // 게시글 작성자 정보 취득
+    const recipient = await db.user.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        posts: {
+          some: {
+            id: postId,
+          },
+        },
+      },
+    });
+
+    // 게시글 작성자에게 알림 전송
+    if (!recipient?.id || !comment.id) return;
+    if (session.id === recipient?.id) return;
+    await db.notifications.create({
+      data: {
+        type: "COMMENT",
+        message: result.data.content,
+        actionUrl: `/posts/${postId}`,
+        comment: {
+          connect: {
+            id: comment.id,
+          },
+        },
+        initiator: {
+          connect: {
+            id: session.id,
+          },
+        },
+        recipient: {
+          connect: {
+            id: recipient.id,
+          },
+        },
+      },
+    });
   }
 }
 
@@ -60,30 +102,71 @@ export async function repost(postId: number) {
       where: { id: postId },
       select: {
         userId: true,
+        content: true,
       },
     });
 
-    if (post?.userId === session.id) {
+    if (!post) return;
+    if (post.userId === session.id) {
       throw new Error("자신의 게시물에는 공감할 수 없어요");
     }
     if (!session.id) {
       throw new Error("로그인 정보를 찾을 수 없어요");
     }
 
-    const reposted = await db.repost.findFirst({
+    const alreadyReposted = await db.repost.findFirst({
+      select: { id: true },
       where: { userId: session.id, postId },
     });
-
-    if (reposted) {
+    if (alreadyReposted) {
       return { success: false };
     }
 
-    await db.repost.create({
+    const repost = await db.repost.create({
+      select: {
+        id: true,
+      },
       data: {
         userId: session.id,
         postId,
       },
     });
+
+    const previousNotification = await db.notifications.findFirst({
+      where: {
+        repostId: repost.id,
+      },
+    });
+    if (!previousNotification) {
+      const user = await db.user.findUnique({
+        select: {
+          username: true,
+        },
+        where: { id: session.id },
+      });
+      await db.notifications.create({
+        data: {
+          type: "REPOST",
+          message: `${user?.username}님이 '${post.content}'에 공감했어요.`,
+          actionUrl: `/posts/${postId}`,
+          repost: {
+            connect: {
+              id: repost.id,
+            },
+          },
+          recipient: {
+            connect: {
+              id: post.userId,
+            },
+          },
+          initiator: {
+            connect: {
+              id: session.id,
+            },
+          },
+        },
+      });
+    }
 
     revalidatePath(`/posts/${postId}`);
 
@@ -145,7 +228,7 @@ export async function deletePost(postId: number) {
         id: postId,
       },
       data: {
-        is_deleted: true,
+        isDeleted: true,
       },
     });
 

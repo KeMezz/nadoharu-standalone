@@ -93,7 +93,7 @@ export default async function PostDetail({
           <div className="flex justify-between pt-6 items-center">
             <div>
               <p className="text-xs text-neutral-400">
-                {formatRelativeTime(new Date(post.created_at))}
+                {formatRelativeTime(new Date(post.createdAt))}
               </p>
             </div>
             <div className="flex gap-4 items-center">
@@ -136,7 +136,7 @@ export default async function PostDetail({
                 postId={postId}
                 content={comment.content}
                 username={comment.user.username}
-                accountId={comment.user.login_id}
+                accountId={comment.user.loginId}
                 avatar={comment.user.avatar}
                 isUserComment={comment.user.id === session?.id}
               />

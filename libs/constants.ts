@@ -48,9 +48,16 @@ export const FRIEND_PENDING = 2;
 // Tabs
 export const TABS = [
   { name: "모아보는", link: "/posts" },
+  { name: "알림", link: "/notifications" },
   { name: "메시지", link: "/chat" },
   { name: "나는", link: "/me" },
-  { name: "친구들은", link: "/friends" },
 ];
+
+// Notifications
+export const NOTIFICATIONS_TITLE = {
+  FRIEND_REQUEST: "친구 신청",
+  REPOST: "나도!",
+  COMMENT: "댓글",
+};
 
 export const CF_DIRECT_UPLOAD_URL = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/images/v2/direct_upload`;

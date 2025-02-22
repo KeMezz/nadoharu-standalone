@@ -12,7 +12,7 @@ interface HeaderProps {
     id: number;
     username: string;
     avatar: string | null;
-    login_id: string;
+    loginId: string;
   } | null;
   children?: React.ReactNode;
 }
@@ -39,13 +39,13 @@ export default function Header({
         ) : null}
         {profile ? (
           <Link
-            href={`/users/${profile.login_id}`}
+            href={`/users/${profile.loginId}`}
             className="flex items-center gap-3"
           >
             <ProfileImage avatar={profile.avatar} username={profile.username} />
             <div className="flex flex-col items-start">
               <h3 className="font-semibold text-sm">{profile.username}</h3>
-              <p className="text-gray-400 text-xs">@{profile.login_id}</p>
+              <p className="text-gray-400 text-xs">@{profile.loginId}</p>
             </div>
           </Link>
         ) : null}

@@ -34,7 +34,7 @@ export async function sendFriendRequest(
 
     const recipient = await db.user.findUnique({
       where: {
-        login_id: recipientLoginId,
+        loginId: recipientLoginId,
       },
       select: {
         id: true,
@@ -59,7 +59,10 @@ export async function sendFriendRequest(
     }
 
     if (session.id) {
-      await db.friendship.upsert({
+      const friendship = await db.friendship.upsert({
+        select: {
+          id: true,
+        },
         where: {
           initiatorId_recipientId: {
             initiatorId: session.id,
@@ -81,6 +84,29 @@ export async function sendFriendRequest(
           recipient: {
             connect: {
               id: recipient.id,
+            },
+          },
+        },
+      });
+
+      await db.notifications.create({
+        data: {
+          type: "FRIEND_REQUEST",
+          message: result.data.text,
+          actionUrl: `/me/requested`,
+          recipient: {
+            connect: {
+              id: recipient.id,
+            },
+          },
+          initiator: {
+            connect: {
+              id: session.id,
+            },
+          },
+          friendship: {
+            connect: {
+              id: friendship.id,
             },
           },
         },
