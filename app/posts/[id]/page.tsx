@@ -1,4 +1,4 @@
-import Comment from "@/components/comment";
+import Comment from "@/components/domains/comment";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { formatRelativeTime } from "@/libs/utils";
@@ -7,8 +7,8 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
 } from "@heroicons/react/24/outline";
 import { notFound } from "next/navigation";
-import CommentForm from "@/components/forms/comment-form";
-import RepostForm from "@/components/forms/detail-repost-form";
+import CommentForm from "@/components/domains/comment/form";
+import RepostForm from "@/components/domains/post/repost-form";
 import Image from "next/image";
 import Link from "next/link";
 

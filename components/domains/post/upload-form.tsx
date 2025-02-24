@@ -1,9 +1,9 @@
 "use client";
 
 import { PlusIcon } from "@heroicons/react/24/solid";
-import SubmitButton from "../buttons/submit-button";
-import TextInput from "../inputs/text-input";
-import Textarea from "../inputs/textarea";
+import SubmitButton from "@/components/shared/buttons/submit-button";
+import TextInput from "@/components/shared/inputs/text-input";
+import Textarea from "@/components/shared/inputs/textarea";
 import { useActionState, useState } from "react";
 import { uploadPost, UploadPostForm } from "@/app/posts/upload/action";
 import { useSetAtom } from "jotai";

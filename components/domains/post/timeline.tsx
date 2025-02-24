@@ -1,7 +1,7 @@
 import { Post, Repost } from "@prisma/client";
-import PostPreview from "./post-preview";
-import RepostPreview from "./repost-preview";
-import EmptyState from "./layouts/empty-state";
+import PostPreview from "@/components/domains/post/preview";
+import RepostPreview from "@/components/domains/post/repost-preview";
+import EmptyState from "@/components/layouts/empty-state";
 
 export interface PostWithUser extends Post {
   user: {

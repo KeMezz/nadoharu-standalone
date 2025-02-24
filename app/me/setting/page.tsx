@@ -1,4 +1,4 @@
-import EditProfileForm from "@/components/forms/edit-profile-form";
+import EditProfileForm from "@/components/domains/profile/edit-profile-form";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";

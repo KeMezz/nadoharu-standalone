@@ -1,4 +1,4 @@
-import CommentSkeleton from "@/components/skeletons/comment";
+import CommentSkeleton from "@/components/domains/comment/skeleton";
 
 export default function PostDetailLoading() {
   return (

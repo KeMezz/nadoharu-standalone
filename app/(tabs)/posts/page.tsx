@@ -2,7 +2,7 @@ import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { FRIEND_ACCEPTED } from "@/libs/constants";
 import { notFound } from "next/navigation";
-import Timeline from "@/components/timeline";
+import Timeline from "@/components/domains/post/timeline";
 
 async function getFriends(userId: number) {
   const friends = await db.friendship.findMany({

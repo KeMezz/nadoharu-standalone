@@ -1,6 +1,6 @@
 "use client";
 
-import ChatInput from "../inputs/chat-input";
+import ChatInput from "@/components/domains/chat/input";
 import { useActionState } from "react";
 import { createComment } from "@/app/posts/[id]/action";
 import { ActionPrevState } from "@/types/form";

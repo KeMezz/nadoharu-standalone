@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { PostWithUser } from "./timeline";
+import { PostWithUser } from "@/components/domains/post/timeline";
 import { formatRelativeTime } from "@/libs/utils";
-import PostPreviewButtons from "./buttons/post-preview-buttons";
+import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
-import ProfileImage from "./profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 import Image from "next/image";
 
 interface PostPreviewProps {

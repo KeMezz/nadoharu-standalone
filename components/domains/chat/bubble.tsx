@@ -1,6 +1,6 @@
-import ProfileImage from "./profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 
-interface BubbleProps {
+interface ChatBubbleProps {
   message: string;
   avatar: string | null;
   reversed?: boolean;
@@ -12,7 +12,7 @@ export default function ChatBubble({
   reversed,
   avatar,
   username,
-}: BubbleProps) {
+}: ChatBubbleProps) {
   return (
     <div className={`flex gap-3 ${reversed ? "justify-end" : "justify-start"}`}>
       {!reversed ? <ProfileImage avatar={avatar} username={username} /> : null}

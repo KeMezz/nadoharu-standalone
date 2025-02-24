@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import EmptyState from "./layouts/empty-state";
-import PostPreview from "./post-preview";
-import RepostPreview from "./repost-preview";
-import { PostWithUser, RepostWithUser } from "./timeline";
+import EmptyState from "@/components/layouts/empty-state";
+import PostPreview from "@/components/domains/post/preview";
+import RepostPreview from "@/components/domains/post/repost-preview";
+import {
+  PostWithUser,
+  RepostWithUser,
+} from "@/components/domains/post/timeline";
 
 interface UserTimelineProps {
   posts: PostWithUser[];

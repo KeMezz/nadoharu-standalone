@@ -5,7 +5,7 @@ import { alertAtom, toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 
-interface ReceiveRequestFormProps {
+interface FriendshipReceiveFormProps {
   id: number;
   initiatorId: number;
   recipientId: number;
@@ -21,9 +21,9 @@ interface ReceiveRequestFormProps {
   };
 }
 
-export default function ReceiveRequestForm({
+export default function FriendshipReceiveForm({
   initiator,
-}: ReceiveRequestFormProps) {
+}: FriendshipReceiveFormProps) {
   const router = useRouter();
   const setToast = useSetAtom(toastAtom);
   const setAlert = useSetAtom(alertAtom);

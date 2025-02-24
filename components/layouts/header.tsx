@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
-import ProfileImage from "../profile-image";
+import ProfileImage from "../domains/profile/image";
 
 interface HeaderProps {
   title?: string;

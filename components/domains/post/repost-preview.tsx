@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { RepostWithUser } from "./timeline";
+import { RepostWithUser } from "@/components/domains/post/timeline";
 import { formatRelativeTime } from "@/libs/utils";
-import PostPreviewButtons from "./buttons/post-preview-buttons";
+import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import ProfileImage from "./profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 
 interface RepostPreviewProps {
   repost: RepostWithUser;

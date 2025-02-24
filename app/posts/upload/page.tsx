@@ -1,5 +1,5 @@
 import Layout from "@/components/layouts/layout";
-import UploadForm from "@/components/forms/upload-form";
+import UploadForm from "@/components/domains/post/upload-form";
 
 export default async function UploadPost() {
   return (
