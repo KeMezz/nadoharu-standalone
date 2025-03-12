@@ -1,4 +1,4 @@
-import ProfileImage from "@/components/profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 import Link from "next/link";
 
 export default function Chats() {

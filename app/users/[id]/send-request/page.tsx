@@ -1,7 +1,7 @@
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { notFound, redirect } from "next/navigation";
-import SendRequestForm from "@/components/forms/send-request-form";
+import SendRequestForm from "@/components/domains/friendship/send-form";
 
 async function getRecipient(loginId: string) {
   const recipient = await db.user.findUnique({

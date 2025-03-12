@@ -1,8 +1,8 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import SubmitButton from "../buttons/submit-button";
-import TextInput from "../inputs/text-input";
+import SubmitButton from "@/components/shared/buttons/submit-button";
+import TextInput from "@/components/shared/inputs/text-input";
 import register from "@/app/(auth)/register/action";
 
 export default function RegisterForm() {

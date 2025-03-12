@@ -6,7 +6,7 @@ import * as constants from "@/libs/constants";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
 import { revalidatePath } from "next/cache";
-import { CommentForm } from "@/components/forms/comment-form";
+import { CommentForm } from "@/components/domains/comment/form";
 
 const commentSchema = z.object({
   content: z

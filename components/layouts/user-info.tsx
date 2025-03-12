@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { UserPlusIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import ProfileImage from "../profile-image";
+import ProfileImage from "../domains/profile/image";
 
 interface UserTemplateProps {
   isMe?: boolean;

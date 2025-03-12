@@ -2,7 +2,7 @@ import db from "@/libs/db";
 import getSession from "@/libs/session";
 import EmptyState from "@/components/layouts/empty-state";
 import { NOTIFICATIONS_TITLE } from "@/libs/constants";
-import ProfileImage from "@/components/profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 import Link from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 

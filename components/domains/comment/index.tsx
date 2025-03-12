@@ -1,6 +1,6 @@
 import Link from "next/link";
-import CommentMoreBtns from "./buttons/comment-more-button";
-import ProfileImage from "./profile-image";
+import CommentMoreBtns from "@/components/domains/comment/more-button";
+import ProfileImage from "@/components/domains/profile/image";
 
 interface CommentProps {
   avatar: string | null;

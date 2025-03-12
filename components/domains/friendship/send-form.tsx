@@ -8,19 +8,19 @@ import {
   sendFriendRequest,
   SendFriendRequestForm,
 } from "@/app/users/[id]/send-request/action";
-import SubmitButton from "@/components/buttons/submit-button";
-import Textarea from "@/components/inputs/textarea";
+import SubmitButton from "@/components/shared/buttons/submit-button";
+import Textarea from "@/components/shared/inputs/textarea";
 import { ActionPrevState } from "@/types/form";
 
-interface SendRequestFormProps {
+interface FriendshipSendFormProps {
   username: string;
   loginId: string;
 }
 
-export default function SendRequestForm({
+export default function FriendshipSendForm({
   username,
   loginId,
-}: SendRequestFormProps) {
+}: FriendshipSendFormProps) {
   const router = useRouter();
   const setToast = useSetAtom(toastAtom);
 

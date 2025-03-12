@@ -1,15 +1,15 @@
 "use client";
 
 import { PencilIcon } from "@heroicons/react/24/solid";
-import ProfileImage from "../profile-image";
+import ProfileImage from "./image";
 import { useActionState, useState } from "react";
-import Textarea from "../inputs/textarea";
+import Textarea from "../../shared/inputs/textarea";
 import { updateProfile, UpdateProfileForm } from "@/app/me/setting/action";
 import { useSetAtom } from "jotai";
 import { alertAtom } from "@/libs/atoms";
 import { ActionPrevState } from "@/types/form";
 import { getImageUrl } from "@/libs/utils";
-import SubmitButton from "../buttons/submit-button";
+import SubmitButton from "../../shared/buttons/submit-button";
 import { getUploadUrl } from "@/app/(common)/action";
 
 interface EditProfileFormProps {

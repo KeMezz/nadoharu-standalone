@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import db from "@/libs/db";
 import getSession from "@/libs/session";
-import UserTimeline from "@/components/user-timeline";
+import UserTimeline from "@/components/domains/post/user-timeline";
 import UserInfo from "@/components/layouts/user-info";
 
 export const metadata = {

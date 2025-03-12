@@ -2,9 +2,9 @@
 
 import db from "@/libs/db";
 import getSession from "@/libs/session";
-import ReceiveRequestForm from "@/components/forms/receive-request-form";
+import ReceiveRequestForm from "@/components/domains/friendship/receive-form";
 import Link from "next/link";
-import ProfileImage from "@/components/profile-image";
+import ProfileImage from "@/components/domains/profile/image";
 import EmptyState from "@/components/layouts/empty-state";
 
 async function getFriendRequests(userId: number) {
