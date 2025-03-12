@@ -3,7 +3,6 @@
 import { useState } from "react";
 import EmptyState from "@/components/layouts/empty-state";
 import PostPreview from "@/components/domains/post/preview";
-import RepostPreview from "@/components/domains/post/repost-preview";
 import {
   PostWithUser,
   RepostWithUser,
@@ -76,10 +75,11 @@ export default function UserTimeline({
               "content" in post ? (
                 <PostPreview key={post.id} post={post} userId={userId} />
               ) : (
-                <RepostPreview
+                <PostPreview
                   key={post.post.id}
-                  repost={post}
+                  post={post.post}
                   userId={userId}
+                  repostUser={post.user}
                 />
               )
             )
@@ -103,7 +103,12 @@ export default function UserTimeline({
         <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
           {reposts.length ? (
             reposts.map((post) => (
-              <RepostPreview key={post.post.id} repost={post} userId={userId} />
+              <PostPreview
+                key={post.post.id}
+                post={post.post}
+                userId={userId}
+                repostUser={post.user}
+              />
             ))
           ) : (
             <EmptyState text="아직 공감한 글이 없어요!" userInfo />

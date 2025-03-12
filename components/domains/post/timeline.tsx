@@ -1,6 +1,5 @@
 import { Post, Repost } from "@prisma/client";
 import PostPreview from "@/components/domains/post/preview";
-import RepostPreview from "@/components/domains/post/repost-preview";
 import EmptyState from "@/components/layouts/empty-state";
 
 export interface PostWithUser extends Post {
@@ -54,7 +53,12 @@ export default function Timeline({ posts, reposts, userId }: TimelineProps) {
           "content" in post ? (
             <PostPreview key={post.id} post={post} userId={userId} />
           ) : (
-            <RepostPreview key={post.post.id} repost={post} userId={userId} />
+            <PostPreview
+              key={post.id}
+              post={post.post}
+              userId={userId}
+              repostUser={post.user}
+            />
           )
         )
       ) : (

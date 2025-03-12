@@ -7,15 +7,23 @@ import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
 import Image from "next/image";
+import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid";
 
 interface PostPreviewProps {
   post: PostWithUser;
   userId: number;
+  repostUser?: {
+    id: number;
+    username: string;
+    loginId: string;
+    avatar: string | null;
+  };
 }
 
 export default function PostPreview({
   post: { id, user, content, tags, photos, createdAt, _count, reposts },
   userId,
+  repostUser,
 }: PostPreviewProps) {
   const router = useRouter();
   const isUserPost = Number(user.id) === userId;
@@ -30,6 +38,13 @@ export default function PostPreview({
   return (
     <Link href={`/posts/${id}`}>
       <div className="w-full p-4 text-left flex flex-col gap-3">
+        {repostUser ? (
+          <div className="flex items-center gap-2 text-neutral-400">
+            <ArrowPathRoundedSquareIcon className="size-3" />
+            <p className="text-xs">{repostUser.username} 님이 공감했어요</p>
+          </div>
+        ) : null}
+
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
