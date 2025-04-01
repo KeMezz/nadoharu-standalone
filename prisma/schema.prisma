@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,28 +19,29 @@ model User {
   isDeleted              Boolean         @default(false)
   createdAt              DateTime        @default(now())
   updatedAt              DateTime        @updatedAt
-  tokens                 Token[]
-  posts                  Post[]
-  reposts                Repost[]
+  chatMessages           ChatMessage[]
+  chatRoomsAsInitiator   ChatRoom[]      @relation("chatRoomAsInitiator")
+  chatRoomsAsRecipient   ChatRoom[]      @relation("chatRoomAsRecipient")
   comments               Comment[]
   friends                Friendship[]    @relation("FriendsAsInitiator")
   friendOf               Friendship[]    @relation("FriendsAsRecipient")
-  recipientNotifications Notifications[] @relation("RecipientNotifications")
   initiatedNotifications Notifications[] @relation("InitiatorNotifications")
-  chatRooms              ChatRoom[]
-  chatMessages           ChatMessage[]
+  recipientNotifications Notifications[] @relation("RecipientNotifications")
+  posts                  Post[]
+  reposts                Repost[]
+  tokens                 Token[]
 }
 
 model Friendship {
   id            Int             @id @default(autoincrement())
-  status        Int             @default(2) // 0: rejected, 1: accepted, 2: pending
+  status        Int             @default(2)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   text          String?
-  initiator     User            @relation("FriendsAsInitiator", fields: [initiatorId], references: [id])
   initiatorId   Int
-  recipient     User            @relation("FriendsAsRecipient", fields: [recipientId], references: [id])
   recipientId   Int
+  initiator     User            @relation("FriendsAsInitiator", fields: [initiatorId], references: [id])
+  recipient     User            @relation("FriendsAsRecipient", fields: [recipientId], references: [id])
   notifications Notifications[]
 
   @@unique([initiatorId, recipientId])
@@ -57,8 +52,8 @@ model Token {
   token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
   userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Post {
@@ -70,21 +65,21 @@ model Post {
   isDeleted Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  user      User      @relation(fields: [userId], references: [id])
   userId    Int
-  reposts   Repost[]
   comments  Comment[]
+  user      User      @relation(fields: [userId], references: [id])
+  reposts   Repost[]
 }
 
 model Repost {
   id            Int             @id @default(autoincrement())
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  user          User            @relation(fields: [userId], references: [id])
   userId        Int
-  post          Post            @relation(fields: [postId], references: [id])
   postId        Int
   notifications Notifications[]
+  post          Post            @relation(fields: [postId], references: [id])
+  user          User            @relation(fields: [userId], references: [id])
 
   @@unique([userId, postId])
 }
@@ -95,10 +90,10 @@ model Comment {
   isDeleted     Boolean         @default(false)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  user          User            @relation(fields: [userId], references: [id])
   userId        Int
-  post          Post            @relation(fields: [postId], references: [id])
   postId        Int
+  post          Post            @relation(fields: [postId], references: [id])
+  user          User            @relation(fields: [userId], references: [id])
   notifications Notifications[]
 }
 
@@ -110,25 +105,19 @@ model Notifications {
   actionUrl    String
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
-  recipient    User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
   recipientId  Int
-  initiator    User             @relation("InitiatorNotifications", fields: [initiatorId], references: [id])
   initiatorId  Int
-  friendship   Friendship?      @relation(fields: [friendshipId], references: [id])
   friendshipId Int?
-  repost       Repost?          @relation(fields: [repostId], references: [id])
   repostId     Int?
-  comment      Comment?         @relation(fields: [commentId], references: [id])
   commentId    Int?
+  comment      Comment?         @relation(fields: [commentId], references: [id])
+  friendship   Friendship?      @relation(fields: [friendshipId], references: [id])
+  initiator    User             @relation("InitiatorNotifications", fields: [initiatorId], references: [id])
+  recipient    User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
+  repost       Repost?          @relation(fields: [repostId], references: [id])
 
   @@index([recipientId, createdAt])
   @@index([isRead, recipientId])
-}
-
-enum NotificationType {
-  FRIEND_REQUEST
-  REPOST
-  COMMENT
 }
 
 model ChatRoom {
@@ -136,9 +125,13 @@ model ChatRoom {
   name         String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  user         User?         @relation(fields: [userId], references: [id])
-  userId       Int?
+  initiatorId  Int
+  recipientId  Int
   chatMessages ChatMessage[]
+  initiator    User          @relation("chatRoomAsInitiator", fields: [initiatorId], references: [id])
+  recipient    User          @relation("chatRoomAsRecipient", fields: [recipientId], references: [id])
+
+  @@unique([initiatorId, recipientId])
 }
 
 model ChatMessage {
@@ -146,8 +139,14 @@ model ChatMessage {
   content    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
   chatRoomId Int
-  user       User     @relation(fields: [userId], references: [id])
   userId     Int
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+enum NotificationType {
+  FRIEND_REQUEST
+  REPOST
+  COMMENT
 }
