@@ -25,6 +25,7 @@ export default function EditProfileForm({
   loginId,
   bio,
 }: EditProfileFormProps) {
+  const maxImageSizeMb = 20;
   const setAlert = useSetAtom(alertAtom);
   const [preview, setPreview] = useState<string | null>(avatar);
   const [uploadUrl, setUploadUrl] = useState("");
@@ -33,7 +34,7 @@ export default function EditProfileForm({
   const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 1024 * 1024 * 2) {
+    if (file.size > 1024 * 1024 * maxImageSizeMb) {
       setAlert({
         visible: true,
         title: "너무 커요!",
@@ -71,14 +72,14 @@ export default function EditProfileForm({
     });
     if (response.status !== 200) {
       throw new Error(
-        "이미지 저장소에 문제가 있는 것 같아요. 잠시 후에 다시 시도해주세요."
+        "이미지 저장소에 문제가 있는 것 같아요. 잠시 후에 다시 시도해주세요.",
       );
     }
   };
 
   const updateProfileWrapper = async (
     state: ActionPrevState<UpdateProfileForm>,
-    formData: FormData
+    formData: FormData,
   ) => {
     try {
       const file = formData.get("avatar");

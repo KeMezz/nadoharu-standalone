@@ -13,7 +13,7 @@ import { getUploadUrl } from "@/app/(common)/action";
 import { ActionPrevState } from "@/types/form";
 import { getImageUrl } from "@/libs/utils";
 
-const maxImageSizeMb = 5;
+const maxImageSizeMb = 20;
 const maxImages = 4;
 
 export default function UploadForm() {
@@ -165,16 +165,14 @@ export default function UploadForm() {
         <div>
           <label
             htmlFor="photos"
-            className={`w-14 h-14 border-2 border-dashed rounded-md text-neutral-300 flex justify-center items-center ${
-              previews.length >= maxImages
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer hover:text-neutral-700 hover:border-neutral-700 dark:hover:text-neutral-400 dark:hover:border-neutral-400"
-            }`}
+            className={`w-14 h-14 border-2 border-dashed rounded-md text-neutral-300 flex justify-center items-center ${previews.length >= maxImages
+              ? "opacity-50 cursor-not-allowed"
+              : "cursor-pointer hover:text-neutral-700 hover:border-neutral-700 dark:hover:text-neutral-400 dark:hover:border-neutral-400"
+              }`}
           >
             <PlusIcon
-              className={`size-6 ${
-                previews.length >= maxImages ? "rotate-45" : ""
-              }`}
+              className={`size-6 ${previews.length >= maxImages ? "rotate-45" : ""
+                }`}
             />
           </label>
           <input
