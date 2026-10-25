@@ -26,7 +26,7 @@ interface LayoutProps {
 export type MoreBtns = {
   action: (event: Event) => void;
   name: string;
-  icon: JSX.Element;
+  icon: React.JSX.Element;
 }[];
 
 const Layout: NextPage<LayoutProps> = ({

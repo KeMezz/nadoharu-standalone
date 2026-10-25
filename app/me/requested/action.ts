@@ -7,6 +7,9 @@ import { revalidatePath } from "next/cache";
 export async function deleteRequest(initiatorId: number) {
   try {
     const session = await getSession();
+    if (!session.id) {
+      return { success: false, message: "로그인 정보를 찾을 수 없어요" };
+    }
     const friendship = await db.friendship.update({
       select: {
         id: true,
@@ -14,7 +17,7 @@ export async function deleteRequest(initiatorId: number) {
       where: {
         initiatorId_recipientId: {
           initiatorId: initiatorId,
-          recipientId: session.id!,
+          recipientId: session.id,
         },
         status: 2,
       },
@@ -48,6 +51,9 @@ export async function deleteRequest(initiatorId: number) {
 export async function acceptRequest(initiatorId: number) {
   try {
     const session = await getSession();
+    if (!session.id) {
+      return { success: false, message: "로그인 정보를 찾을 수 없어요" };
+    }
 
     const friendship = await db.friendship.update({
       select: {
@@ -56,7 +62,7 @@ export async function acceptRequest(initiatorId: number) {
       where: {
         initiatorId_recipientId: {
           initiatorId: initiatorId,
-          recipientId: session.id!,
+          recipientId: session.id,
         },
         status: 2,
       },
