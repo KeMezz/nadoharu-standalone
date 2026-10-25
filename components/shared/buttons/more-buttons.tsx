@@ -4,7 +4,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 export type MoreBtn = {
   action: () => void;
   name: string;
-  icon: JSX.Element;
+  icon: React.JSX.Element;
 };
 
 export default function MoreButtons({ buttons }: { buttons: MoreBtn[] }) {

@@ -54,7 +54,7 @@ export default async function PostDetail({
     return notFound();
   }
   const post = await getPost(postId);
-  if (!post) {
+  if (!post || post.isDeleted) {
     return notFound();
   }
   const session = await getSession();

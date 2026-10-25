@@ -35,6 +35,9 @@ export async function updateProfile(
     return result.error.flatten();
   } else {
     const session = await getSession();
+    if (!session.id) {
+      redirect("/login");
+    }
     if (result.data.avatar) {
       await db.user.update({
         where: {

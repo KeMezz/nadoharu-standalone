@@ -18,10 +18,12 @@ export default function CommentMoreBtns({
   const setAlert = useSetAtom(alertAtom);
   const setToast = useSetAtom(toastAtom);
   const removeComment = async () => {
-    await deleteComment(commentId, postId);
+    const result = await deleteComment(commentId, postId);
     setToast({
       visible: true,
-      title: "댓글이 삭제되었습니다.",
+      title: result.success
+        ? "댓글이 삭제되었습니다."
+        : "댓글을 삭제할 수 없습니다.",
     });
   };
   const showRemoveAlert = () => {

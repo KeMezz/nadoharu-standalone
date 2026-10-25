@@ -45,6 +45,21 @@ export async function sendFriendRequest(
     }
 
     const session = await getSession();
+    if (!session.id) {
+      return {
+        success: false,
+        message: "로그인 정보를 찾을 수 없어요",
+        fieldErrors: null,
+      };
+    }
+    if (session.id === recipient.id) {
+      return {
+        success: false,
+        message: "자신에게는 친구 신청을 보낼 수 없어요",
+        fieldErrors: null,
+      };
+    }
+
     const isFriend = await db.friendship.findFirst({
       where: {
         OR: [
@@ -58,7 +73,7 @@ export async function sendFriendRequest(
       return redirect(`/users/${recipient.id}`);
     }
 
-    if (session.id) {
+    {
       const friendship = await db.friendship.upsert({
         select: {
           id: true,

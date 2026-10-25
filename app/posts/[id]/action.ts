@@ -33,6 +33,12 @@ export async function createComment(
 
   const session = await getSession();
   if (session.id) {
+    const targetPost = await db.post.findFirst({
+      select: { id: true },
+      where: { id: postId, isDeleted: false },
+    });
+    if (!targetPost) return;
+
     const comment = await db.comment.create({
       select: {
         id: true,
@@ -103,10 +109,11 @@ export async function repost(postId: number) {
       select: {
         userId: true,
         content: true,
+        isDeleted: true,
       },
     });
 
-    if (!post) return;
+    if (!post || post.isDeleted) return;
     if (post.userId === session.id) {
       throw new Error("자신의 게시물에는 공감할 수 없어요");
     }
@@ -223,14 +230,31 @@ export async function unrepost(postId: number) {
 
 export async function deletePost(postId: number) {
   try {
-    await db.post.update({
+    const session = await getSession();
+    if (!session.id) {
+      return { success: false, message: "로그인 정보를 찾을 수 없어요" };
+    }
+
+    // 소유자 조건을 WHERE에 포함시켜 확인과 갱신을 한 번에 처리한다
+    const { count } = await db.post.updateMany({
       where: {
         id: postId,
+        userId: session.id,
+        isDeleted: false,
       },
       data: {
         isDeleted: true,
       },
     });
+    if (count === 0) {
+      return {
+        success: false,
+        message: "게시물을 삭제할 수 없어요",
+      };
+    }
+
+    revalidatePath("/posts");
+    revalidatePath(`/posts/${postId}`);
 
     return { success: true };
   } catch (error) {
@@ -244,10 +268,25 @@ export async function deletePost(postId: number) {
 
 export async function deleteComment(commentId: number, postId: number) {
   try {
-    await db.comment.delete({
-      where: { id: commentId },
+    const session = await getSession();
+    if (!session.id) {
+      return { success: false, message: "로그인 정보를 찾을 수 없어요" };
+    }
+
+    // 작성자 본인의 댓글만, 요청한 게시글에 속한 경우에만 삭제한다
+    const { count } = await db.comment.deleteMany({
+      where: { id: commentId, userId: session.id, postId },
     });
+    if (count === 0) {
+      return {
+        success: false,
+        message: "댓글을 삭제할 수 없어요",
+      };
+    }
+
     revalidatePath(`/posts/${postId}`);
+
+    return { success: true };
   } catch (error) {
     console.error(error);
     return {

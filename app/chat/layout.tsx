@@ -2,7 +2,6 @@ import Header from "@/components/layouts/header";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
 }
 
 export default async function ChatLayout({ children }: LayoutProps) {
