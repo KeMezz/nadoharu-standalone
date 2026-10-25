@@ -7,6 +7,7 @@ import { ActionPrevState } from "@/types/form";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { isCloudflareImageUrl, IMAGE_URL_MAX_LENGTH } from "@/libs/image-validation";
 
 export interface UpdateProfileForm {
   avatar: string | null;
@@ -14,7 +15,9 @@ export interface UpdateProfileForm {
 }
 
 const updateProfileSchema = z.object({
-  avatar: z.string().optional(),
+  avatar: z.string().max(IMAGE_URL_MAX_LENGTH)
+    .refine((value) => value === "" || isCloudflareImageUrl(value), "올바른 사진 주소를 입력해주세요")
+    .optional(),
   bio: z
     .string()
     .max(constants.BIO_MAX_LENGTH, constants.BIO_MAX_ERROR_MESSAGE)
@@ -25,19 +28,18 @@ export async function updateProfile(
   _: ActionPrevState<UpdateProfileForm>,
   formData: FormData
 ) {
+  const session = await getSession();
+  if (!session.id) redirect("/login");
+
   const data = {
-    avatar: formData.get("avatar"),
-    bio: formData.get("bio"),
+    avatar: formData.get("avatar") ?? undefined,
+    bio: formData.get("bio") ?? undefined,
   };
   const result = await updateProfileSchema.spa(data);
 
   if (!result.success) {
     return result.error.flatten();
   } else {
-    const session = await getSession();
-    if (!session.id) {
-      redirect("/login");
-    }
     if (result.data.avatar) {
       await db.user.update({
         where: {

@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { parsePostPhotos, isCloudflareImageUrl, IMAGE_URL_MAX_LENGTH } from "@/libs/image-validation";
 import * as constants from "@/libs/constants";
 import getSession from "@/libs/session";
 import db from "@/libs/db";
@@ -25,24 +26,31 @@ const postSchema = z.object({
   tags: z
     .string()
     .max(constants.POST_TAGS_MAX_LENGTH, constants.POST_TAGS_MAX_ERROR_MESSAGE),
-  photos: z.array(z.string()).max(4, constants.POST_PHOTOS_MAX_ERROR_MESSAGE),
+  photos: z.array(z.string().max(IMAGE_URL_MAX_LENGTH).refine(isCloudflareImageUrl))
+    .max(constants.POST_PHOTOS_MAX_LENGTH, constants.POST_PHOTOS_MAX_ERROR_MESSAGE),
 });
 
 export async function uploadPost(
   _: ActionPrevState<UploadPostForm>,
   formData: FormData
 ) {
+  const session = await getSession();
+  if (!session.id) redirect("/login");
+
+  const photos = parsePostPhotos(formData.get("photos"));
+  if (photos === null) {
+    return { formErrors: [], fieldErrors: { photos: ["올바른 사진 주소를 최대 4개 입력해주세요"] } };
+  }
   const data = {
     content: formData.get("content"),
     tags: formData.get("tags"),
-    photos: JSON.parse(formData.get("photos") as string),
+    photos,
   };
   const result = await postSchema.spa(data);
 
   if (!result.success) {
     return result.error.flatten();
   }
-  const session = await getSession();
   if (session.id) {
     await db.post.create({
       data: {

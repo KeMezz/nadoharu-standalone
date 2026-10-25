@@ -1,14 +1,33 @@
 type Row = Record<string, unknown>;
 type Where = Record<string, unknown>;
 
-const matches = (row: Row, where: Where) =>
-  Object.entries(where).every(([key, value]) => row[key] === value);
+const matches = (row: Row, where: Where): boolean =>
+  Object.entries(where).every(([key, value]) => {
+    // Prisma omits undefined filters; compound unique fields expand to columns.
+    if (value === undefined) return true;
+    if (key === "OR") return (value as Where[]).some((part) => matches(row, part));
+    if (key.includes("_") && value && typeof value === "object") return matches(row, value as Where);
+    if (value && typeof value === "object" && "in" in value) return (value.in as unknown[]).includes(row[key]);
+    return row[key] === value;
+  });
 
 // where 절을 실제로 평가하는 최소한의 인메모리 모델.
 // 호출 인자를 검사하는 대신 "누구의 행이 실제로 바뀌는가"를 검증하기 위해 사용한다.
 export function createTable(rows: Row[]) {
   return {
     rows,
+    async create({ data }: { data: Row }) {
+      const row = { id: rows.length + 1000, ...data };
+      rows.push(row);
+      return row;
+    },
+    async upsert({ where, update, create }: { where: Where; update: Row; create: Row }) {
+      const row = rows.find((candidate) => matches(candidate, where));
+      if (row) return Object.assign(row, update);
+      const added = { id: rows.length + 1000, ...create };
+      rows.push(added);
+      return added;
+    },
     // Prisma의 update/delete는 대상이 없으면 예외를 던진다
     async update({ where, data }: { where: Where; data: Row }) {
       const row = rows.find((candidate) => matches(candidate, where));
